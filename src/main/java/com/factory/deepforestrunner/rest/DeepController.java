@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 /**
  * DeepController data
  *
@@ -26,6 +28,11 @@ public class DeepController {
     public String hello(
         @RequestParam(value = "name") String name
     ) {
-        return String.format("Hello %s!", name);
+        return String.format(
+            "Привет спортсмен %s! Время старта %s время финиша %s",
+            name,
+            LocalDateTime.now(),
+            LocalDateTime.now().plusSeconds(32L)
+        );
     }
 }
