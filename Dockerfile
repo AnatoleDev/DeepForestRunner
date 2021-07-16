@@ -23,7 +23,7 @@ COPY --from=builder /DeepForestRunner/target/DeepForestRunner-*.jar /DeepForestR
 ## This default value facilitates local development.
 ENV PORT 8080
 
-EXPOSE 3333
+EXPOSE 8080
 
 ENV TZ Asia/Omsk
 
