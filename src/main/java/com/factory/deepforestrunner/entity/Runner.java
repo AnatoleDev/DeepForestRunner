@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * Runner data
  *
@@ -22,7 +24,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Getter
 @Accessors(chain = true)
-public class Runner {
+public class Runner implements Serializable {
 
     private Long id;
     private String name;
