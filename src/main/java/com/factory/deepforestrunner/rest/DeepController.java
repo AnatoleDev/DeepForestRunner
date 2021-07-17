@@ -10,29 +10,53 @@
 
 package com.factory.deepforestrunner.rest;
 
+import com.factory.deepforestrunner.entity.Runner;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DeepController data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 14.07.2021.
  */
-@RestController
+@Controller
+@RequiredArgsConstructor
 public class DeepController {
 
+    private final JdbcTemplate jdbcTemplate;
+
+    @RequestMapping("/")
+    public String start() {
+        return "redirect:/runner";
+    }
+
     @GetMapping("/runner")
-    public String hello(
-        @RequestParam(value = "name") String name
+    @ResponseBody
+    public String runner(
+        @RequestParam(value = "name", defaultValue = "Ivan") String name
     ) {
+        //Insert a record:
+        final String insert = String.format("INSERT INTO runners VALUES (NULL, '%s')", name);
+        jdbcTemplate.execute(insert);
+
+        List<Runner> runners = jdbcTemplate.query("SELECT * FROM runners",
+            (resultSet, rowNum) -> new Runner()
+                .setId(resultSet.getLong("id"))
+                .setName(resultSet.getString("name")));
+
         return String.format(
-            "Привет спортсмен %s! Время старта %s время финиша %s",
-            name,
-            LocalDateTime.now(),
-            LocalDateTime.now().plusSeconds(32L)
+            "Приветствую вас спортсмены \n %s! Вас теперь %s",
+            runners.stream().map(Runner::getName).collect(Collectors.joining(", \n")),
+            runners.size()
+
         );
     }
 }
