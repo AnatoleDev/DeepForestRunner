@@ -5,26 +5,44 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="'Молодец, ты продвинулся дальше, ' + ${text} + '!'"></p>
+<p th:text="Жеребьевка"></p>
+<table th:border="2">
+    <thead>
+    <tr>
+        <th> №</th>
+        <th> команды</th>
+        <th> Капитан</th>
+        <th> Телефон</th>
+        <th> Жеребьевка</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${organizations.empty}">
+        <td colspan="2"> No runners Available</td>
+    </tr>
+    <tr th:each="organization : ${organizations}">
+        <td><span th:text="${organization.id}"></span></td>
+        <td><span th:text="${organization.name}"></span></td>
+        <td><span th:text="${organization.captain}"></span></td>
+        <td><span th:text="${organization.phone}"></span></td>
+        <td><span th:text="${organization.number}"></span></td>
+    </tr>
+    </tbody>
+</table>
 
-<p th:text="'Коллекция, ' + ${runners.stream().findFirst().orElse(null).name} + '!'"></p>
-
-<tr th:each="runner: ${runners}">
-    <td th:text="${runner.id}"></td>
-    <td th:text="${runner.name}"></td>
-</tr>
-
-<form action="#" th:action="@{/saveRunner}" th:object="${runner}" method="post">
-    <table border="1">
-        <tr>
-            <td><label th:text="ФИО"></label></td>
-            <td><input type="text" th:field="*{name}" /></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit" /></td>
-        </tr>
-    </table>
-</form>
+<button name="removeRow" type="submit" value="1">На главную</button>
+<button name="removeRow" type="submit" value="3">Загрузить данные из файла</button>
+<!--<form action="#" th:action="@{/saveRunner}" th:object="${runner}" method="post">-->
+<!--    <table border="1">-->
+<!--        <tr>-->
+<!--            <td><label th:text="ФИО"></label></td>-->
+<!--            <td><input type="text" th:field="*{fio}" /></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><input type="submit" value="Submit" /></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
 
 
 </body>

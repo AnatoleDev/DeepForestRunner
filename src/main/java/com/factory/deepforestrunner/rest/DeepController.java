@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.rest;
 
+import com.factory.deepforestrunner.entity.Organization;
 import com.factory.deepforestrunner.entity.Runner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,9 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,28 +39,23 @@ public class DeepController {
     public String start(
         final Model model
     ) {
-        model.addAttribute("name", "Стартовая страница запуска");
+        model.addAttribute("start", "Стартовая страница запуска");
         return "index";
     }
 
     @GetMapping("/runner")
     public String runner(
-        @RequestParam(value = "name", defaultValue = "Ivan") final String name,
         final Model model
     ) {
-        //Insert a record:
-//        final String insert = String.format("INSERT INTO runners VALUES (NULL, '%s')", name);
-//        jdbcTemplate.execute(insert);
 
         List<Runner> runners = jdbcTemplate.query("SELECT * FROM runners",
             (resultSet, rowNum) -> new Runner()
                 .setId(resultSet.getLong("id"))
-                .setName(resultSet.getString("name")));
+                .setFio(resultSet.getString("name")));
 
         final String format = String.format(
-            "Приветствую %s вас спортсмены \n %s! Вас теперь %s",
-            name,
-            runners.stream().map(Runner::getName).collect(Collectors.joining(", \n")),
+            "Приветствую вас спортсмены \n %s! Вас теперь %s",
+            runners.stream().map(Runner::getFio).collect(Collectors.joining(", \n")),
             runners.size()
         );
 
@@ -79,7 +72,25 @@ public class DeepController {
         BindingResult errors,
         Model model
     ) {
-        return runner(runner.getName(), model);
+        return runner(model);
+        // logic to process input data
+    }
+
+    @GetMapping("/draw")
+    public String Draw(
+        Model model
+    ) {
+
+        List<Organization> organizations = jdbcTemplate.query("SELECT * FROM organization",
+            (resultSet, rowNum) -> new Organization()
+                .setId(resultSet.getLong("id"))
+                .setName(resultSet.getString("name"))
+                .setNumber(resultSet.getInt("number"))
+                .setCaptain(resultSet.getString("captain"))
+                .setPhone(resultSet.getString("phone")));
+
+        model.addAttribute("organizations", organizations);
+        return "runner";
         // logic to process input data
     }
 
