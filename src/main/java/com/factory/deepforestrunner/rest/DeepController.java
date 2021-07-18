@@ -81,7 +81,7 @@ public class DeepController {
         Model model
     ) {
 
-        List<Organization> organizations = jdbcTemplate.query("SELECT * FROM organization",
+        List<Organization> organizations = jdbcTemplate.query("SELECT * FROM organization ORDER BY number DESC ",
             (resultSet, rowNum) -> new Organization()
                 .setId(resultSet.getLong("id"))
                 .setName(resultSet.getString("name"))
