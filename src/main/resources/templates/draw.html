@@ -37,7 +37,22 @@
 <a th:href="@{/}">
     <button type="button">На главную</button>
 </a>
-<button name="removeRow" type="submit" value="3">Загрузить данные из файла</button>
+
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2>Загрузить данные из файла</h2>
+                <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" name="file" class="form-control-file">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

@@ -16,25 +16,22 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
- * Runner data
+ * Customer data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 16.07.2021.
  */
 @Setter
 @Getter
 @Accessors(chain = true)
-public class Runner implements Serializable {
+public class Customer implements Serializable {
 
     private Long id;
     private String fio;
     private Gender gender;
     private String phone;
-    private Integer number;
-    private LocalDateTime start;
-    private LocalDateTime finish;
-    private Integer place;
+    private LocalDate birthday;
     private Long orgId;
 }
