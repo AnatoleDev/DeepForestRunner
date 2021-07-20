@@ -11,18 +11,13 @@
 package com.factory.deepforestrunner.rest;
 
 import com.factory.deepforestrunner.entity.Organization;
-import com.factory.deepforestrunner.entity.Runner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * DeepController data
@@ -43,45 +38,45 @@ public class DeepController {
         return "index";
     }
 
-    @GetMapping("/runner")
-    public String runner(
-        final Model model
-    ) {
+//    @GetMapping("/draw")
+//    public String runner(
+//        final Model model
+//    ) {
+//
+//        List<Runner> runners = jdbcTemplate.query("SELECT * FROM runners",
+//            (resultSet, rowNum) -> new Runner()
+//                .setId(resultSet.getLong("id"))
+//                .setFio(resultSet.getString("name")));
+//
+//        final String format = String.format(
+//            "Приветствую вас спортсмены \n %s! Вас теперь %s",
+//            runners.stream().map(Runner::getFio).collect(Collectors.joining(", \n")),
+//            runners.size()
+//        );
+//
+//        model.addAttribute("runners", runners);
+//        model.addAttribute("runner", new Runner());
+//        model.addAttribute("text", format);
+//
+//        return "draw";
+//    }
 
-        List<Runner> runners = jdbcTemplate.query("SELECT * FROM runners",
-            (resultSet, rowNum) -> new Runner()
-                .setId(resultSet.getLong("id"))
-                .setFio(resultSet.getString("name")));
-
-        final String format = String.format(
-            "Приветствую вас спортсмены \n %s! Вас теперь %s",
-            runners.stream().map(Runner::getFio).collect(Collectors.joining(", \n")),
-            runners.size()
-        );
-
-        model.addAttribute("runners", runners);
-        model.addAttribute("runner", new Runner());
-        model.addAttribute("text", format);
-
-        return "runner";
-    }
-
-    @PostMapping("/saveRunner")
-    public String saveRunner(
-        @ModelAttribute Runner runner,
-        BindingResult errors,
-        Model model
-    ) {
-        return runner(model);
-        // logic to process input data
-    }
+//    @PostMapping("/saveRunner")
+//    public String saveRunner(
+//        @ModelAttribute Runner runner,
+//        BindingResult errors,
+//        Model model
+//    ) {
+//        return runner(model);
+//        // logic to process input data
+//    }
 
     @GetMapping("/draw")
-    public String Draw(
+    public String draw(
         Model model
     ) {
 
-        List<Organization> organizations = jdbcTemplate.query("SELECT * FROM organization ORDER BY number DESC ",
+        final List<Organization> organizations = jdbcTemplate.query("SELECT * FROM organization ORDER BY number DESC ",
             (resultSet, rowNum) -> new Organization()
                 .setId(resultSet.getLong("id"))
                 .setName(resultSet.getString("name"))
@@ -90,9 +85,7 @@ public class DeepController {
                 .setPhone(resultSet.getString("phone")));
 
         model.addAttribute("organizations", organizations);
-        return "runner";
-        // logic to process input data
+
+        return "draw";
     }
-
-
 }

@@ -1,12 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 
-<p th:text="'Hello, ' + ${start} + '!'"></p>
-<p>Тки что бы перейти на выбор команды  <a href="/draw">Сюда</a></p>
+
+<a th:href="@{/draw}">
+    <button type="button">Жеребьевка</button>
+</a>
+<button>Список участников</button>
+<button>Стартовый протокол</button>
+<button>Сводная</button>
+
 </body>
 </html>
