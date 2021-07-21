@@ -17,14 +17,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * Organization data
+ * Subdivision data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 18.07.2021.
  */
 @Setter
 @Getter
 @Accessors(chain = true)
-public class Organization implements Serializable {
+public class Subdivision implements Serializable {
 
     private Long id;
     private String name;

@@ -10,8 +10,8 @@
 
 package com.factory.deepforestrunner.rest;
 
-import com.factory.deepforestrunner.entity.Customer;
-import com.factory.deepforestrunner.entity.Organization;
+import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.Subdivision;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -81,13 +81,13 @@ public class DeepController {
 //            NPOIFSFileSystem n = new NPOIFSFileSystem(file);
             final Workbook workbook = WorkbookFactory.create(arrayInputStream);
             final Sheet sheet = workbook.getSheetAt(1);
-            final List<Customer> runners = new ArrayList<>();
+            final List<Participant> participants = new ArrayList<>();
             final DataFormatter formatter = new DataFormatter();
 
 
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 final Row row = sheet.getRow(i);
-                runners.add(parseRow(row, formatter));
+                participants.add(parseRow(row, formatter));
             }
             arrayInputStream.close();
         } catch (IOException | InvalidFormatException ioException) {
@@ -97,13 +97,13 @@ public class DeepController {
         return draw(model);
     }
 
-    private Customer parseRow(
+    private Participant parseRow(
         Row row,
         DataFormatter formatter
     ) {
 
         Map<String, String> parseError = new HashMap<>();
-        final Customer customer = new Customer();
+        final Participant customer = new Participant();
 
         customer.setFio(parseCell(row, 1, formatter));
         final String parseCell = parseCell(row, 2, formatter);
@@ -119,19 +119,19 @@ public class DeepController {
 //        final Model model
 //    ) {
 //
-//        List<Customer> runners = jdbcTemplate.query("SELECT * FROM runners",
-//            (resultSet, rowNum) -> new Customer()
+//        List<Participant> runners = jdbcTemplate.query("SELECT * FROM runners",
+//            (resultSet, rowNum) -> new Participant()
 //                .setId(resultSet.getLong("id"))
 //                .setFio(resultSet.getString("name")));
 //
 //        final String format = String.format(
 //            "Приветствую вас спортсмены \n %s! Вас теперь %s",
-//            runners.stream().map(Customer::getFio).collect(Collectors.joining(", \n")),
+//            runners.stream().map(Participant::getFio).collect(Collectors.joining(", \n")),
 //            runners.size()
 //        );
 //
 //        model.addAttribute("runners", runners);
-//        model.addAttribute("runner", new Customer());
+//        model.addAttribute("runner", new Participant());
 //        model.addAttribute("text", format);
 //
 //        return "draw";
@@ -139,7 +139,7 @@ public class DeepController {
 
 //    @PostMapping("/saveRunner")
 //    public String saveRunner(
-//        @ModelAttribute Customer runner,
+//        @ModelAttribute Participant runner,
 //        BindingResult errors,
 //        Model model
 //    ) {
@@ -152,16 +152,16 @@ public class DeepController {
         Model model
     ) {
 
-        final List<Organization> organizations = jdbcTemplate.query(
-            "SELECT * FROM organization ORDER BY number DESC ",
-            (resultSet, rowNum) -> new Organization()
+        final List<Subdivision> subdivisions = jdbcTemplate.query(
+            "SELECT * FROM subdivision ORDER BY number DESC ",
+            (resultSet, rowNum) -> new Subdivision()
                 .setId(resultSet.getLong("id"))
                 .setName(resultSet.getString("name"))
                 .setNumber(resultSet.getInt("number"))
                 .setCaptain(resultSet.getString("captain"))
                 .setPhone(resultSet.getString("phone")));
 
-        model.addAttribute("organizations", organizations);
+        model.addAttribute("subdivisions", subdivisions);
 
         return "draw";
     }

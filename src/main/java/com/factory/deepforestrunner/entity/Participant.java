@@ -19,19 +19,18 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * Customer data
+ * Participant data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 16.07.2021.
  */
 @Setter
 @Getter
 @Accessors(chain = true)
-public class Customer implements Serializable {
+public class Participant implements Serializable {
 
     private Long id;
     private String fio;
     private Gender gender;
-    private String phone;
     private LocalDate birthday;
     private Long orgId;
 }
