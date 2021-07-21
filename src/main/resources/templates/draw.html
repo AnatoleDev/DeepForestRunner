@@ -22,7 +22,7 @@
     </thead>
     <tbody>
     <tr th:if="${subdivisions.isEmpty()}">
-        <td colspan="2"> Организации отсутсвуют</td>
+        <td colspan="2"> Подразделения отсутсвуют</td>
     </tr>
     <tr th:each="subdivision : ${subdivisions} ">
         <td><span th:text="${subdivision.name}"></span></td>
