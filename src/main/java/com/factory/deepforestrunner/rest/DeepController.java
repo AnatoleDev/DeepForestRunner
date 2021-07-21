@@ -10,30 +10,10 @@
 
 package com.factory.deepforestrunner.rest;
 
-import com.factory.deepforestrunner.entity.Participant;
-import com.factory.deepforestrunner.entity.Subdivision;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * DeepController data
@@ -44,10 +24,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DeepController {
 
-    private final JdbcTemplate jdbcTemplate;
-
-//    private final static String UPLOAD_DIR = "./src/main/resources/db/";
-
     @GetMapping("/")
     public String start(
         final Model model
@@ -55,87 +31,6 @@ public class DeepController {
         model.addAttribute("start", "Стартовая страница запуска");
         return "index";
     }
-
-    @PostMapping("/upload")
-    public String uploadFile(
-        @RequestParam("file") MultipartFile file,
-        Model model
-    ) {
-        if (file.isEmpty()) {
-            return draw(model);
-        }
-
-        try {
-
-//            final String insert = String.format(
-//                "INSERT INTO files (name, content) VALUES ('%s', '%s')",
-//                StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())),
-//                Arrays.toString(file.getBytes())
-//            );
-
-//            jdbcTemplate.execute(insert);
-
-            final byte[] fileBytes = file.getBytes();
-
-            final ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(fileBytes);
-//            NPOIFSFileSystem n = new NPOIFSFileSystem(file);
-            final Workbook workbook = WorkbookFactory.create(arrayInputStream);
-            final Sheet sheet = workbook.getSheetAt(1);
-            final List<Participant> participants = new ArrayList<>();
-            final DataFormatter formatter = new DataFormatter();
-
-
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                final Row row = sheet.getRow(i);
-                participants.add(parseRow(row, formatter));
-            }
-            arrayInputStream.close();
-        } catch (IOException | InvalidFormatException ioException) {
-            ioException.printStackTrace();
-        }
-
-        return draw(model);
-    }
-
-    private Participant parseRow(
-        Row row,
-        DataFormatter formatter
-    ) {
-
-        Map<String, String> parseError = new HashMap<>();
-        final Participant customer = new Participant();
-
-        customer.setFio(parseCell(row, 1, formatter));
-        final String parseCell = parseCell(row, 2, formatter);
-        final String parseCell2 = parseCell(row, 3, formatter);
-//        customer.setGender(parseCell);
-
-        return customer;
-
-    }
-
-//    @GetMapping("/draw")
-//    public String runner(
-//        final Model model
-//    ) {
-//
-//        List<Participant> runners = jdbcTemplate.query("SELECT * FROM runners",
-//            (resultSet, rowNum) -> new Participant()
-//                .setId(resultSet.getLong("id"))
-//                .setFio(resultSet.getString("name")));
-//
-//        final String format = String.format(
-//            "Приветствую вас спортсмены \n %s! Вас теперь %s",
-//            runners.stream().map(Participant::getFio).collect(Collectors.joining(", \n")),
-//            runners.size()
-//        );
-//
-//        model.addAttribute("runners", runners);
-//        model.addAttribute("runner", new Participant());
-//        model.addAttribute("text", format);
-//
-//        return "draw";
-//    }
 
 //    @PostMapping("/saveRunner")
 //    public String saveRunner(
@@ -146,46 +41,4 @@ public class DeepController {
 //        return runner(model);
 //        // logic to process input data
 //    }
-
-    @GetMapping("/draw")
-    public String draw(
-        Model model
-    ) {
-
-        final List<Subdivision> subdivisions = jdbcTemplate.query(
-            "SELECT * FROM subdivision ORDER BY number DESC ",
-            (resultSet, rowNum) -> new Subdivision()
-                .setId(resultSet.getLong("id"))
-                .setName(resultSet.getString("name"))
-                .setNumber(resultSet.getInt("number"))
-                .setCaptain(resultSet.getString("captain"))
-                .setPhone(resultSet.getString("phone")));
-
-        model.addAttribute("subdivisions", subdivisions);
-
-        return "draw";
-    }
-
-    private static String parseCell(
-        final Row row,
-        final int cellIndex,
-        final DataFormatter formatter
-    ) {
-        final Cell cell = row.getCell(cellIndex, Row.RETURN_BLANK_AS_NULL);
-
-        if (cell == null) {
-            return null;
-        } else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
-
-            switch (cell.getCachedFormulaResultType()) {
-                case Cell.CELL_TYPE_NUMERIC:
-                    return String.valueOf(cell.getNumericCellValue());
-                case Cell.CELL_TYPE_STRING:
-                    return cell.getRichStringCellValue().getString();
-            }
-        } else {
-            return formatter.formatCellValue(cell);
-        }
-        return null;
-    }
 }
