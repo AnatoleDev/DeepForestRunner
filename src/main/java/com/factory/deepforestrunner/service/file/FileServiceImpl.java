@@ -12,6 +12,7 @@ package com.factory.deepforestrunner.service.file;
 
 import com.factory.deepforestrunner.dao.FileDao;
 import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.service.FileService;
 import com.factory.deepforestrunner.util.ParseUtil;
 import lombok.RequiredArgsConstructor;
@@ -53,25 +54,48 @@ public class FileServiceImpl implements FileService {
             // subdivision 0
             // participant 1
 
-            final Sheet sheet = workbook.getSheetAt(1);
 
-            final List<Participant> participants = new ArrayList<>();
+            final List<Subdivision> subdivisions = createdSubdivision(workbook);
 
-            final DataFormatter formatter = new DataFormatter();
-
-            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-
-                participants.add(
-                    ParseUtil.parseParticipant(
-                        sheet.getRow(i),
-                        formatter
-                    )
-                );
-            }
+            final List<Participant> participants = createdParticipant(workbook);
 
             arrayInputStream.close();
         } catch (IOException | InvalidFormatException ioException) {
             ioException.printStackTrace();
         }
+    }
+
+    private List<Participant> createdParticipant(Workbook workbook) {
+
+        final List<Participant> participants = new ArrayList<>();
+        final Sheet sheet = workbook.getSheetAt(1);
+        final DataFormatter formatter = new DataFormatter();
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            participants.add(
+                ParseUtil.parseParticipant(
+                    sheet.getRow(i),
+                    formatter
+                )
+            );
+        }
+        return participants;
+    }
+
+    private List<Subdivision> createdSubdivision(Workbook workbook) {
+
+        final List<Subdivision> subdivisions = new ArrayList<>();
+        final Sheet sheet = workbook.getSheetAt(0);
+        final DataFormatter formatter = new DataFormatter();
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            subdivisions.add(
+                ParseUtil.parseSubdivision(
+                    sheet.getRow(i),
+                    formatter
+                )
+            );
+        }
+        return subdivisions;
     }
 }

@@ -11,24 +11,40 @@
 package com.factory.deepforestrunner.util;
 
 import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.Subdivision;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+
+import java.util.Optional;
 
 /**
  * ParseUtil data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ParseUtil {
 
-    private ParseUtil() {
+    public static Subdivision parseSubdivision(
+        final Row row,
+        final DataFormatter formatter
+    ) {
+        return new Subdivision()
+            .setNumber(
+                Optional.ofNullable(parseCell(row, 1, formatter))
+                    .map(Integer::parseInt)
+                    .orElse(0))
+            .setName(parseCell(row, 2, formatter))
+            .setCaptain(parseCell(row, 3, formatter))
+            .setPhone(parseCell(row, 4, formatter));
     }
 
-
     public static Participant parseParticipant(
-        Row row,
-        DataFormatter formatter
+        final Row row,
+        final DataFormatter formatter
     ) {
 
         final Participant customer = new Participant();
@@ -65,5 +81,4 @@ public final class ParseUtil {
         }
         return null;
     }
-
 }

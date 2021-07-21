@@ -43,10 +43,9 @@ public class SubdivisionController {
 
     @GetMapping("/draw")
     public String draw(
-        Model model
+        final Model model
     ) {
         model.addAttribute("subdivisions",  subdivisionService.list());
         return "subdivisions";
     }
-
 }
