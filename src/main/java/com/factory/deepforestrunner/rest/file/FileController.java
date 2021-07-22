@@ -39,6 +39,7 @@ public class FileController {
         if (!file.isEmpty()) {
             fileService.create(file);
         }
-        return "draw(model)";
+
+        return "subdivisions";
     }
 }

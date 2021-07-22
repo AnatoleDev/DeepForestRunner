@@ -28,6 +28,13 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ParseUtil {
 
+    /**
+     * Parse subdivision subdivision.
+     *
+     * @param row       the row
+     * @param formatter the formatter
+     * @return the subdivision
+     */
     public static Subdivision parseSubdivision(
         final Row row,
         final DataFormatter formatter
@@ -42,24 +49,39 @@ public final class ParseUtil {
             .setPhone(parseCell(row, 4, formatter));
     }
 
+    /**
+     * Parse participant participant.
+     *
+     * @param row       the row
+     * @param formatter the formatter
+     * @return the participant
+     */
     public static Participant parseParticipant(
         final Row row,
         final DataFormatter formatter
     ) {
 
-        final Participant customer = new Participant();
+        final Participant participant = new Participant();
 
-        customer.setFio(parseCell(row, 1, formatter));
+        participant.setFio(parseCell(row, 1, formatter));
         final String parseCell = parseCell(row, 2, formatter);
         final String parseCell2 = parseCell(row, 3, formatter);
-//        customer.setGender(parseCell);
+//        participant.setGender(parseCell);
 
-        return customer;
+        return participant;
 
 
     }
 
-    private static String parseCell(
+    /**
+     * Parse cell string.
+     *
+     * @param row       the row
+     * @param cellIndex the cell index
+     * @param formatter the formatter
+     * @return the string
+     */
+    public static String parseCell(
         final Row row,
         final int cellIndex,
         final DataFormatter formatter

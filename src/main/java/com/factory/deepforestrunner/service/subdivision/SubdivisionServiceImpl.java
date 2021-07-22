@@ -33,4 +33,11 @@ public class SubdivisionServiceImpl implements SubdivisionService {
     public List<Subdivision> list() {
         return subdivisionDao.list();
     }
+
+    @Override
+    public void createAll(
+        final List<Subdivision> createdSubdivisions
+    ) {
+        subdivisionDao.createAll(createdSubdivisions);
+    }
 }

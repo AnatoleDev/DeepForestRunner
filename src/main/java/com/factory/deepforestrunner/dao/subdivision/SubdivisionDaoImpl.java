@@ -14,10 +14,13 @@ import com.factory.deepforestrunner.dao.SubdivisionDao;
 import com.factory.deepforestrunner.dao.subdivision.rowmapper.SubdivisionRowMap;
 import com.factory.deepforestrunner.entity.Subdivision;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -37,5 +40,29 @@ public class SubdivisionDaoImpl implements SubdivisionDao {
         return jdbcTemplate.query(
             "SELECT * FROM subdivision",
             new SubdivisionRowMap());
+    }
+
+    @Override
+    public void createAll(
+        final List<Subdivision> createdSubdivisions
+    ) {
+        jdbcTemplate.batchUpdate(
+            "INSERT INTO subdivision (name, number, captain, phone) VALUES(?,?,?,?) ON CONFLICT DO NOTHING",
+            new BatchPreparedStatementSetter() {
+
+                public void setValues(
+                    PreparedStatement ps,
+                    int i
+                ) throws SQLException {
+                    ps.setString(1, createdSubdivisions.get(i).getName());
+                    ps.setLong(2, createdSubdivisions.get(i).getNumber());
+                    ps.setString(3, createdSubdivisions.get(i).getCaptain());
+                    ps.setString(4, createdSubdivisions.get(i).getPhone());
+                }
+
+                public int getBatchSize() {
+                    return createdSubdivisions.size();
+                }
+            });
     }
 }

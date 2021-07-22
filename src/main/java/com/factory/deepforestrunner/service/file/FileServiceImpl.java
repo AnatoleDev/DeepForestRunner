@@ -14,10 +14,12 @@ import com.factory.deepforestrunner.dao.FileDao;
 import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.service.FileService;
+import com.factory.deepforestrunner.service.SubdivisionService;
 import com.factory.deepforestrunner.util.ParseUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -29,6 +31,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.factory.deepforestrunner.util.ParseUtil.parseCell;
+import static org.apache.logging.log4j.util.Strings.isNotBlank;
+
 /**
  * FileServiceImpl data
  *
@@ -39,6 +44,7 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
 
     private final FileDao fileDao;
+    private final SubdivisionService subdivisionService;
 
     @Override
     public void create(
@@ -54,8 +60,7 @@ public class FileServiceImpl implements FileService {
             // subdivision 0
             // participant 1
 
-
-            final List<Subdivision> subdivisions = createdSubdivision(workbook);
+            subdivisionService.createAll(createdSubdivision(workbook));
 
             final List<Participant> participants = createdParticipant(workbook);
 
@@ -72,6 +77,7 @@ public class FileServiceImpl implements FileService {
         final DataFormatter formatter = new DataFormatter();
 
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+
             participants.add(
                 ParseUtil.parseParticipant(
                     sheet.getRow(i),
@@ -89,12 +95,17 @@ public class FileServiceImpl implements FileService {
         final DataFormatter formatter = new DataFormatter();
 
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-            subdivisions.add(
-                ParseUtil.parseSubdivision(
-                    sheet.getRow(i),
-                    formatter
-                )
-            );
+
+            final Row row = sheet.getRow(i);
+
+            if (isNotBlank(parseCell(row, 1, formatter))) {
+                subdivisions.add(
+                    ParseUtil.parseSubdivision(
+                        row,
+                        formatter
+                    )
+                );
+            }
         }
         return subdivisions;
     }

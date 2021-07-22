@@ -26,4 +26,14 @@ public interface SubdivisionService {
      * @return the list
      */
     List<Subdivision> list();
+
+
+    /**
+     * Create all.
+     *
+     * @param createdSubdivisions the created subdivision
+     */
+    void createAll(
+        final List<Subdivision> createdSubdivisions
+    );
 }
