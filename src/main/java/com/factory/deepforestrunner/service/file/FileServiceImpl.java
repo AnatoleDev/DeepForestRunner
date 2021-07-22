@@ -14,6 +14,7 @@ import com.factory.deepforestrunner.dao.FileDao;
 import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.service.FileService;
+import com.factory.deepforestrunner.service.ParticipantService;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import com.factory.deepforestrunner.util.ParseUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,17 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.factory.deepforestrunner.util.ParseUtil.parseCell;
 import static org.apache.logging.log4j.util.Strings.isNotBlank;
@@ -45,8 +51,10 @@ public class FileServiceImpl implements FileService {
 
     private final FileDao fileDao;
     private final SubdivisionService subdivisionService;
+    private final ParticipantService participantService;
 
     @Override
+    @Transactional
     public void create(
         final MultipartFile file
     ) {
@@ -57,33 +65,35 @@ public class FileServiceImpl implements FileService {
             final ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(file.getBytes());
             final Workbook workbook = WorkbookFactory.create(arrayInputStream);
 
-            // subdivision 0
-            // participant 1
+            final List<Subdivision> createdSubdivisions = createdSubdivision(workbook);
 
-            subdivisionService.createAll(createdSubdivision(workbook));
-
-            final List<Participant> participants = createdParticipant(workbook);
+            subdivisionService.createAll(createdSubdivisions);
+            participantService.createAll(createdParticipant(workbook));
 
             arrayInputStream.close();
-        } catch (IOException | InvalidFormatException ioException) {
-            ioException.printStackTrace();
+        } catch (IOException | InvalidFormatException | ParseException e) {
+            e.printStackTrace();
         }
     }
 
-    private List<Participant> createdParticipant(Workbook workbook) {
+    private List<Participant> createdParticipant(
+        final Workbook workbook
+    ) throws ParseException {
 
         final List<Participant> participants = new ArrayList<>();
         final Sheet sheet = workbook.getSheetAt(1);
         final DataFormatter formatter = new DataFormatter();
+        formatter.addFormat("m/d/yy", new java.text.SimpleDateFormat("dd.MM.yyyy"));
 
+        final Map<String, Subdivision> stringSubdivisionMap = subdivisionService.list().stream()
+            .collect(Collectors.toMap(Subdivision::getName, Function.identity()));
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
-            participants.add(
-                ParseUtil.parseParticipant(
-                    sheet.getRow(i),
-                    formatter
-                )
-            );
+            final Row row = sheet.getRow(i);
+
+            if (isNotBlank(parseCell(row, 0, formatter))) {
+                participants.add(ParseUtil.parseParticipant(row, formatter, stringSubdivisionMap));
+            }
         }
         return participants;
     }
@@ -99,12 +109,7 @@ public class FileServiceImpl implements FileService {
             final Row row = sheet.getRow(i);
 
             if (isNotBlank(parseCell(row, 1, formatter))) {
-                subdivisions.add(
-                    ParseUtil.parseSubdivision(
-                        row,
-                        formatter
-                    )
-                );
+                subdivisions.add(ParseUtil.parseSubdivision(row, formatter));
             }
         }
         return subdivisions;

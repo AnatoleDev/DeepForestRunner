@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p th:text="Список"></p>
+
+<p>Кол-во:
+    <span th:text="${participants.size()}"> </span>
+</p>
+
+<table th:border="1">
+    <thead>
+    <tr>
+        <th>Подразделение</th>
+        <th>ФИО</th>
+        <th>Пол</th>
+        <th>Жеребьевка</th>
+        <th>Дата</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${participants.isEmpty()}">
+        <td colspan="2"> Подразделения отсутсвуют</td>
+    </tr>
+    <tr th:each="participant : ${participants} ">
+        <td><span th:text="${participant.subdivisionName}"></span></td>
+        <td><span th:text="${participant.fio}"></span></td>
+        <td><span th:text="${participant.gender}"></span></td>
+        <td><span th:text="${participant.number}"></span></td>
+        <td><span th:text="${participant.birthday}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<a th:href="@{/}">
+    <button type="button">На главную</button>
+</a>
+
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2>Загрузить данные из файла</h2>
+                <form method="post" th:action="@{/file}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" name="file" class="form-control-file">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.util;
 
+import com.factory.deepforestrunner.common.Gender;
 import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
 import lombok.AccessLevel;
@@ -18,7 +19,12 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Optional;
+
+import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
 /**
  * ParseUtil data
@@ -27,6 +33,8 @@ import java.util.Optional;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ParseUtil {
+
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     /**
      * Parse subdivision subdivision.
@@ -52,25 +60,22 @@ public final class ParseUtil {
     /**
      * Parse participant participant.
      *
-     * @param row       the row
-     * @param formatter the formatter
+     * @param row                  the row
+     * @param formatter            the formatter
+     * @param stringSubdivisionMap the string subdivision map
      * @return the participant
      */
     public static Participant parseParticipant(
         final Row row,
-        final DataFormatter formatter
+        final DataFormatter formatter,
+        final Map<String, Subdivision> stringSubdivisionMap
     ) {
-
-        final Participant participant = new Participant();
-
-        participant.setFio(parseCell(row, 1, formatter));
-        final String parseCell = parseCell(row, 2, formatter);
-        final String parseCell2 = parseCell(row, 3, formatter);
-//        participant.setGender(parseCell);
-
-        return participant;
-
-
+        return new Participant()
+            .setFio(parseCell(row, 1, formatter))
+            .setGender(nvl(parseCell(row, 2, formatter), Gender::byRus))
+            .setBirthday(
+                nvl(parseCell(row, 5, formatter), strDate -> LocalDate.parse(strDate, DATE_FORMAT)))
+            .setOrgId(nvl(parseCell(row, 0, formatter), name -> stringSubdivisionMap.get(name).getId()));
     }
 
     /**
@@ -101,6 +106,7 @@ public final class ParseUtil {
         } else {
             return formatter.formatCellValue(cell);
         }
+
         return null;
     }
 }

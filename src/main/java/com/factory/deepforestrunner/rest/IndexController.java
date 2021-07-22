@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 @RequiredArgsConstructor
-public class DeepController {
+public class IndexController {
 
     @GetMapping("/")
     public String start(

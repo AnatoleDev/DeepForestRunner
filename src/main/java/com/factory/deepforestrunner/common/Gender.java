@@ -10,17 +10,27 @@
 
 package com.factory.deepforestrunner.common;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Arrays;
 
 /**
  * Gender data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 18.07.2021.
  */
+@Getter
 @RequiredArgsConstructor
 public enum Gender {
     M("М"),
     F("Ж");
 
     private final String rusGender;
+
+    public static Gender byRus(final String rusGender) {
+        return Arrays.stream(Gender.values())
+            .filter(g -> g.getRusGender().equals(rusGender))
+            .findFirst().orElse(null);
+    }
 }
