@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.entity.dto;
 
+import com.factory.deepforestrunner.common.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -30,7 +31,7 @@ public class RunnerDTO implements Serializable {
     private String subdivision;
     private String participant;
     private Integer number;
-    private String gender;
+    private Gender gender;
     private String start;
     private String finish;
     private String total;

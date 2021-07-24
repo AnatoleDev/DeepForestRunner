@@ -46,7 +46,7 @@ public final class RunnerUtil {
             .setSubdivision(subdivision.getName())
             .setParticipant(participant.getFio())
             .setNumber(runner.getNumber())
-            .setGender(nvl(participant.getGender(), Enum::name))
+            .setGender(participant.getGender())
             .setStart(nvl(runner.getStart(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
             .setFinish(nvl(runner.getFinish(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
             .setTotal(nvl(runner.getTotal(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))

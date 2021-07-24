@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.rest.runner;
 
+import com.factory.deepforestrunner.common.Gender;
 import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.entity.dto.RunnerDTO;
@@ -54,15 +55,18 @@ public class RunnerController {
         final Map<Long, Participant> participantMap = participantService.list().stream()
             .collect(Collectors.toMap(Participant::getId, Function.identity()));
 
-        final List<RunnerDTO> runners = runnerService.list().stream()
+        final Map<Gender, List<RunnerDTO>> runnerMap = runnerService.list().stream()
             .map(runner -> runner_2_dto(
                 runner,
                 participantMap.getOrDefault(runner.getParticipantId(), new Participant()),
                 subdivisionMap.getOrDefault(runner.getSubdivisionId(), new Subdivision()))
             )
-            .collect(Collectors.toList());
+            .collect(Collectors.groupingBy(RunnerDTO::getGender));
 
-        model.addAttribute("runners", runners);
+
+        model.addAttribute("mRunners", runnerMap.get(Gender.M));
+        model.addAttribute("fRunners", runnerMap.get(Gender.F));
+
         return "runner";
     }
 }

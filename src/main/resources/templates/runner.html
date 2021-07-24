@@ -6,10 +6,9 @@
 </head>
 <body>
 
-<p>Стартовый протокол</p>
-
+<p>Стартовый протокол Группа М</p>
 <p>Кол-во:
-    <span th:text="${runners.size()}"> </span>
+    <span th:text="${mRunners.size()}"> </span>
 </p>
 
 <table th:border="1">
@@ -25,10 +24,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${runners.isEmpty()}">
+    <tr th:if="${mRunners.isEmpty()}">
         <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
     </tr>
-    <tr th:each="runner : ${runners} ">
+    <tr th:each="runner : ${mRunners} ">
         <td><span th:text="${runner.subdivision}"></span></td>
         <td><span th:text="${runner.participant}"></span></td>
         <td><span th:text="${runner.number}"></span></td>
@@ -40,6 +39,42 @@
     </tbody>
 </table>
 
+<p>Стартовый протокол Группа Ж</p>
+<p>Кол-во:
+    <span th:text="${fRunners.size()}"> </span>
+</p>
+
+<table th:border="1">
+    <thead>
+    <tr>
+        <th>Подразделение</th>
+        <th>ФИО</th>
+        <th>Номер (нагрудный)</th>
+        <th>Старт</th>
+        <th>Финиш</th>
+        <th>Итоговое время</th>
+        <th>Не найдено КП</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${fRunners.isEmpty()}">
+        <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
+    </tr>
+    <tr th:each="runner : ${fRunners} ">
+        <td><span th:text="${runner.subdivision}"></span></td>
+        <td><span th:text="${runner.participant}"></span></td>
+        <td><span th:text="${runner.number}"></span></td>
+        <td><span th:text="${runner.start}"></span></td>
+        <td><span th:text="${runner.finish}"></span></td>
+        <td><span th:text="${runner.total}"></span></td>
+        <td><span th:text="${runner.kp}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+<p>Всего участников :
+    <span th:text="${fRunners.size()} + ${mRunners.size()}"> </span>
+</p>
 
 <a th:href="@{/}">
     <button type="button">На главную</button>
