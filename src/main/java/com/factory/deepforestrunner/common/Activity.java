@@ -16,20 +16,21 @@ import lombok.RequiredArgsConstructor;
 import java.util.Arrays;
 
 /**
- * Gender data
+ * Activity data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 18.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
 @Getter
 @RequiredArgsConstructor
-public enum Gender {
-    M("М"),
-    F("Ж");
+public enum Activity {
+    O("Спортивное ориентирование", "С"),
+    OP("Спортивное ориентирование (практика)", "СП");
 
+    private final String messages;
     private final String rus;
 
-    public static Gender byRus(final String text) {
-        return Arrays.stream(Gender.values())
+    public static Activity byRus(final String text) {
+        return Arrays.stream(Activity.values())
             .filter(g -> g.getRus().equals(text))
             .findFirst().orElse(null);
     }

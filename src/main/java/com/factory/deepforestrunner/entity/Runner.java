@@ -10,29 +10,29 @@
 
 package com.factory.deepforestrunner.entity;
 
-import com.factory.deepforestrunner.common.Activity;
-import com.factory.deepforestrunner.common.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
- * Participant data
+ * Runner data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 16.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
 @Setter
 @Getter
 @Accessors(chain = true)
-public class Participant {
+public class Runner {
 
     private Long id;
-    private String fio;
-    private Gender gender;
-    private LocalDate birthday;
-    private List<Activity> activities;
     private Long orgId;
+    private Long participantId;
+    private Integer number;
+    private LocalDateTime start;
+    private LocalDateTime finish;
+    private LocalDateTime total;
+    private Integer kp;
+
 }

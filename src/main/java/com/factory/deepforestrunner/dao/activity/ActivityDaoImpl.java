@@ -8,11 +8,10 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.dao.subdivision;
+package com.factory.deepforestrunner.dao.activity;
 
-import com.factory.deepforestrunner.dao.SubdivisionDao;
-import com.factory.deepforestrunner.dao.subdivision.rowmapper.SubdivisionRowMap;
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.common.Activity;
+import com.factory.deepforestrunner.dao.ActivityDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,51 +22,45 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.factory.deepforestrunner.util.CommonUtil.nvl;
+
 /**
- * SubdivisionDaoImpl data
+ * ActivityDaoImpl data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class SubdivisionDaoImpl implements SubdivisionDao {
+public class ActivityDaoImpl implements ActivityDao {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Subdivision> list() {
-        return jdbcTemplate.query(
-            "SELECT * FROM subdivision",
-            new SubdivisionRowMap());
+    public void clearAll() {
+        jdbcTemplate.update("DELETE FROM activity");
     }
 
     @Override
     public void createAll(
-        final List<Subdivision> createdSubdivisions
+        final List<Activity> activities,
+        final Long partID
     ) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO subdivision (name, number, captain, phone) VALUES(?,?,?,?) ON CONFLICT DO NOTHING",
+            "INSERT INTO activity (participant_id, type) VALUES(?,?)",
             new BatchPreparedStatementSetter() {
 
                 public void setValues(
                     PreparedStatement ps,
                     int i
                 ) throws SQLException {
-                    ps.setString(1, createdSubdivisions.get(i).getName());
-                    ps.setLong(2, createdSubdivisions.get(i).getNumber());
-                    ps.setString(3, createdSubdivisions.get(i).getCaptain());
-                    ps.setString(4, createdSubdivisions.get(i).getPhone());
+                    ps.setLong(1, partID);
+                    ps.setString(2, nvl(activities.get(i), Enum::name));
                 }
 
                 public int getBatchSize() {
-                    return createdSubdivisions.size();
+                    return activities.size();
                 }
             });
-    }
-
-    @Override
-    public void clearAll() {
-        jdbcTemplate.update("DELETE FROM subdivision");
     }
 }

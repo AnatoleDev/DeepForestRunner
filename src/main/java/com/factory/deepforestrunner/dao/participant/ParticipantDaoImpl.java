@@ -68,4 +68,9 @@ public class ParticipantDaoImpl implements ParticipantDao {
                 }
             });
     }
+
+    @Override
+    public void clearAll() {
+        jdbcTemplate.update("DELETE FROM participant");
+    }
 }

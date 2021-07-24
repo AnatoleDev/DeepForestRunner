@@ -14,8 +14,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -26,6 +28,16 @@ import java.util.function.Function;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CommonUtil {
+
+    /**
+     * The constant DATE_FORMATTER.
+     */
+    public final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+    /**
+     * The constant DATE_TIME_FORMATTER.
+     */
+    public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     /**
      * Nvl t.
@@ -48,6 +60,12 @@ public final class CommonUtil {
      */
     public static final Function<Date, LocalDate> DATE_2_LOCAL_DATE =
         date -> nvl(date.getTime(), d -> new Date(d).toLocalDate());
+
+    /**
+     * The constant DATE_2_LOCAL_DATE_TIME.
+     */
+    public static final Function<Date, LocalDateTime> DATE_2_LOCAL_DATE_TIME =
+        date -> nvl(date, d -> new Timestamp(d.getTime()).toLocalDateTime());
 
 
     /**

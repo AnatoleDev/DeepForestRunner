@@ -16,6 +16,8 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static com.factory.deepforestrunner.util.CommonUtil.DATE_2_LOCAL_DATE_TIME;
+
 /**
  * FileRowMapper data
  *
@@ -23,11 +25,15 @@ import java.sql.SQLException;
  */
 public class FileRowMapper implements RowMapper<File> {
 
+
     @Override
     public File mapRow(
-        ResultSet resultSet,
-        int i
+        final ResultSet resultSet,
+        final int i
     ) throws SQLException {
-        return new File();
+        return new File()
+            .setId(resultSet.getLong("id"))
+            .setName(resultSet.getString("name"))
+            .setCreated(DATE_2_LOCAL_DATE_TIME.apply(resultSet.getDate("created")));
     }
 }

@@ -8,36 +8,32 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.dao;
+package com.factory.deepforestrunner.service;
 
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.Participant;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * SubdivisionDao data
+ * ActivityServices data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
-public interface SubdivisionDao {
-    /**
-     * List list.
-     *
-     * @return the list
-     */
-    List<Subdivision> list();
-
-    /**
-     * Create all.
-     *
-     * @param createdSubdivisions the created subdivision
-     */
-    void createAll(
-        final List<Subdivision> createdSubdivisions
-    );
-
+public interface ActivityServices {
     /**
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Create all.
+     *
+     * @param participants the participants
+     * @param partMap      the part map
+     */
+    void createAll(
+        List<Participant> participants,
+        Map<String, Long> partMap
+    );
 }

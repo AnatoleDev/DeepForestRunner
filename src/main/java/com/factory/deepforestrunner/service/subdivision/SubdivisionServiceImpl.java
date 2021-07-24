@@ -40,4 +40,9 @@ public class SubdivisionServiceImpl implements SubdivisionService {
     ) {
         subdivisionDao.createAll(createdSubdivisions);
     }
+
+    @Override
+    public void clearAll() {
+        subdivisionDao.clearAll();
+    }
 }

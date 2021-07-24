@@ -12,11 +12,14 @@ package com.factory.deepforestrunner.service.participant;
 
 import com.factory.deepforestrunner.dao.ParticipantDao;
 import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.service.ActivityServices;
 import com.factory.deepforestrunner.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * ParticipantServiceImpl data
@@ -28,6 +31,7 @@ import java.util.List;
 public class ParticipantServiceImpl implements ParticipantService {
 
     private final ParticipantDao participantDao;
+    private final ActivityServices activityServices;
 
     @Override
     public List<Participant> list() {
@@ -36,8 +40,18 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public void createAll(
-        final List<Participant> createdParticipant
+        final List<Participant> participants
     ) {
-        participantDao.createAll(createdParticipant);
+        participantDao.createAll(participants);
+
+        final Map<String, Long> partMap = participantDao.list().stream()
+            .collect(Collectors.toMap(Participant::getFio, Participant::getId));
+
+        activityServices.createAll(participants, partMap);
+    }
+
+    @Override
+    public void clearAll() {
+        participantDao.clearAll();
     }
 }

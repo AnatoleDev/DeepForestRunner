@@ -30,9 +30,14 @@ public interface ParticipantService {
     /**
      * Create all.
      *
-     * @param createdParticipant the created participant
+     * @param participants the participants
      */
     void createAll(
-        final List<Participant> createdParticipant
+        final List<Participant> participants
     );
+
+    /**
+     * Clear all.
+     */
+    void clearAll();
 }

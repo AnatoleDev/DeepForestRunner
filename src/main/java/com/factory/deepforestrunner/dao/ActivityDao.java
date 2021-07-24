@@ -10,34 +10,29 @@
 
 package com.factory.deepforestrunner.dao;
 
-import com.factory.deepforestrunner.entity.File;
-import org.springframework.web.multipart.MultipartFile;
+import com.factory.deepforestrunner.common.Activity;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
- * FileDao data
+ * ActivityDao data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
-public interface FileDao {
-    /**
-     * Create.
-     *
-     * @param file the file
-     * @throws IOException the io exception
-     */
-    void create(final MultipartFile file) throws IOException;
-
-    /**
-     * Gets file.
-     *
-     * @return the file
-     */
-    File getFile();
-
+public interface ActivityDao {
     /**
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Create all.
+     *
+     * @param activities the activities
+     * @param partID     the part id
+     */
+    void createAll(
+        List<Activity> activities,
+        Long partID
+    );
 }

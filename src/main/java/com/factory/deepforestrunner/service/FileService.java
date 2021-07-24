@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.service;
 
+import com.factory.deepforestrunner.entity.File;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -27,4 +28,11 @@ public interface FileService {
     void create(
         final MultipartFile file
     );
+
+    /**
+     * Gets file.
+     *
+     * @return the file
+     */
+    File getFile();
 }

@@ -11,6 +11,8 @@
 package com.factory.deepforestrunner.dao.file;
 
 import com.factory.deepforestrunner.dao.FileDao;
+import com.factory.deepforestrunner.dao.file.rowmapper.FileRowMapper;
+import com.factory.deepforestrunner.entity.File;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -45,5 +47,22 @@ public class FileDaoImpl implements FileDao {
                 Arrays.toString(file.getBytes())
             )
         );
+    }
+
+    @Override
+    public File getFile() {
+        return jdbcTemplate.query(
+            "SELECT id, name, created " +
+                "FROM file ORDER BY created LIMIT 1",
+            new FileRowMapper()
+        )
+            .stream()
+            .findFirst()
+            .orElse(null);
+    }
+
+    @Override
+    public void clearAll() {
+        jdbcTemplate.update("DELETE FROM file");
     }
 }

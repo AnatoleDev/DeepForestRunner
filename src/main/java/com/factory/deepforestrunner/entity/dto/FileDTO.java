@@ -8,36 +8,25 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.dao;
+package com.factory.deepforestrunner.entity.dto;
 
-import com.factory.deepforestrunner.entity.File;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-import java.io.IOException;
+import java.io.Serializable;
 
 /**
- * FileDao data
+ * File data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
  */
-public interface FileDao {
-    /**
-     * Create.
-     *
-     * @param file the file
-     * @throws IOException the io exception
-     */
-    void create(final MultipartFile file) throws IOException;
+@Getter
+@Setter
+@Accessors(chain = true)
+public class FileDTO implements Serializable {
 
-    /**
-     * Gets file.
-     *
-     * @return the file
-     */
-    File getFile();
-
-    /**
-     * Clear all.
-     */
-    void clearAll();
+    private Long id;
+    private String name;
+    private String created;
 }

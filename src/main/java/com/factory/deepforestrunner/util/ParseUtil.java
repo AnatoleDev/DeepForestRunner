@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.util;
 
+import com.factory.deepforestrunner.common.Activity;
 import com.factory.deepforestrunner.common.Gender;
 import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
@@ -21,8 +22,12 @@ import org.apache.poi.ss.usermodel.Row;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
@@ -73,10 +78,18 @@ public final class ParseUtil {
         return new Participant()
             .setFio(parseCell(row, 1, formatter))
             .setGender(nvl(parseCell(row, 2, formatter), Gender::byRus))
+            .setActivities(nvl(parseCell(row, 3, formatter), ACTIVITIES))
             .setBirthday(
                 nvl(parseCell(row, 5, formatter), strDate -> LocalDate.parse(strDate, DATE_FORMAT)))
             .setOrgId(nvl(parseCell(row, 0, formatter), name -> stringSubdivisionMap.get(name).getId()));
     }
+
+    private static final Function<String, List<Activity>> ACTIVITIES =
+        str -> Arrays.stream(str.split(" "))
+            .distinct()
+            .map(Activity::byRus)
+            .collect(Collectors.toList());
+
 
     /**
      * Parse cell string.

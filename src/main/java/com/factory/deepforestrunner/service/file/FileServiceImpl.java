@@ -11,8 +11,10 @@
 package com.factory.deepforestrunner.service.file;
 
 import com.factory.deepforestrunner.dao.FileDao;
+import com.factory.deepforestrunner.entity.File;
 import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.service.ActivityServices;
 import com.factory.deepforestrunner.service.FileService;
 import com.factory.deepforestrunner.service.ParticipantService;
 import com.factory.deepforestrunner.service.SubdivisionService;
@@ -52,6 +54,7 @@ public class FileServiceImpl implements FileService {
     private final FileDao fileDao;
     private final SubdivisionService subdivisionService;
     private final ParticipantService participantService;
+    private final ActivityServices activityServices;
 
     @Override
     @Transactional
@@ -60,20 +63,32 @@ public class FileServiceImpl implements FileService {
     ) {
         try {
 
+            clearSystem();
+
             fileDao.create(file);
 
             final ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(file.getBytes());
             final Workbook workbook = WorkbookFactory.create(arrayInputStream);
 
-            final List<Subdivision> createdSubdivisions = createdSubdivision(workbook);
-
-            subdivisionService.createAll(createdSubdivisions);
+            subdivisionService.createAll(createdSubdivision(workbook));
             participantService.createAll(createdParticipant(workbook));
 
             arrayInputStream.close();
         } catch (IOException | InvalidFormatException | ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public File getFile() {
+        return fileDao.getFile();
+    }
+
+    private void clearSystem() {
+        activityServices.clearAll();
+        participantService.clearAll();
+        subdivisionService.clearAll();
+        fileDao.clearAll();
     }
 
     private List<Participant> createdParticipant(

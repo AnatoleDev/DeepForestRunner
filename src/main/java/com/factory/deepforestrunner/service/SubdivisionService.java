@@ -36,4 +36,9 @@ public interface SubdivisionService {
     void createAll(
         final List<Subdivision> createdSubdivisions
     );
+
+    /**
+     * Clear all.
+     */
+    void clearAll();
 }

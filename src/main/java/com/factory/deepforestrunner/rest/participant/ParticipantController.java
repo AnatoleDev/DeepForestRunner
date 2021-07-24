@@ -21,12 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.factory.deepforestrunner.util.CommonUtil.DATE_FORMATTER;
 import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
 /**
@@ -42,8 +42,6 @@ public class ParticipantController {
     private final ParticipantService participantService;
     private final SubdivisionService subdivisionService;
 
-    private final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
     @GetMapping
     public String list(
         final Model model
@@ -58,7 +56,7 @@ public class ParticipantController {
                     .setId(participant.getId())
                     .setSubdivisionName(subdivision.getName())
                     .setFio(participant.getFio())
-                    .setGender(nvl(participant.getGender(), Gender::getRusGender))
+                    .setGender(nvl(participant.getGender(), Gender::getRus))
                     .setNumber(subdivision.getNumber())
                     .setBirthday(nvl(participant.getBirthday(), date -> date.format(DATE_FORMATTER)));
             })

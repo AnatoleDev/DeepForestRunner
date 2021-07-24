@@ -35,4 +35,9 @@ public interface ParticipantDao {
     void createAll(
         final List<Participant> createdParticipant
     );
+
+    /**
+     * Clear all.
+     */
+    void clearAll();
 }
