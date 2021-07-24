@@ -40,6 +40,11 @@ public final class CommonUtil {
     public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     /**
+     * The constant DATE_TIME_FORMATTER.
+     */
+    public final static DateTimeFormatter DATE_TIME_HH_MM_SS_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    /**
      * Nvl t.
      *
      * @param <V> the type parameter
@@ -67,6 +72,11 @@ public final class CommonUtil {
     public static final Function<Date, LocalDateTime> DATE_2_LOCAL_DATE_TIME =
         date -> nvl(date, d -> new Timestamp(d.getTime()).toLocalDateTime());
 
+    /**
+     * The constant LOCAL_DATE_TIME_2_TIMESTAMP.
+     */
+    public static final Function<LocalDateTime, Timestamp> LOCAL_DATE_TIME_2_TIMESTAMP =
+        dateTime -> nvl(dateTime, Timestamp::valueOf);
 
     /**
      * The constant LOCAL_DATE_2_DATE.

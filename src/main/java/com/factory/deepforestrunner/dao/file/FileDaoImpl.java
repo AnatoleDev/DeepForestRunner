@@ -22,7 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Objects;
+
+import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
 /**
  * FileDaoImpl data
@@ -43,7 +44,7 @@ public class FileDaoImpl implements FileDao {
         jdbcTemplate.execute(
             String.format(
                 "INSERT INTO file (name, content) VALUES ('%s', '%s')",
-                StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename())),
+                nvl(file.getOriginalFilename(), StringUtils::cleanPath),
                 Arrays.toString(file.getBytes())
             )
         );

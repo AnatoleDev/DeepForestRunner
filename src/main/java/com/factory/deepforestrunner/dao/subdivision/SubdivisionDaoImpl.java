@@ -11,7 +11,7 @@
 package com.factory.deepforestrunner.dao.subdivision;
 
 import com.factory.deepforestrunner.dao.SubdivisionDao;
-import com.factory.deepforestrunner.dao.subdivision.rowmapper.SubdivisionRowMap;
+import com.factory.deepforestrunner.dao.subdivision.rowmapper.SubdivisionRowMapper;
 import com.factory.deepforestrunner.entity.Subdivision;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -39,7 +39,7 @@ public class SubdivisionDaoImpl implements SubdivisionDao {
     public List<Subdivision> list() {
         return jdbcTemplate.query(
             "SELECT * FROM subdivision",
-            new SubdivisionRowMap());
+            new SubdivisionRowMapper());
     }
 
     @Override

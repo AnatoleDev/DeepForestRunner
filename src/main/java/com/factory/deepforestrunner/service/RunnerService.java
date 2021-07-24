@@ -8,31 +8,32 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.entity;
+package com.factory.deepforestrunner.service;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import com.factory.deepforestrunner.entity.Runner;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
- * Runner data
+ * RunnerService data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
-@Setter
-@Getter
-@Accessors(chain = true)
-public class Runner {
+public interface RunnerService {
+    /**
+     * List list.
+     *
+     * @return the list
+     */
+    List<Runner> list();
 
-    private Long id;
-    private Long subdivisionId;
-    private Long participantId;
-    private Integer number;
-    private LocalDateTime start;
-    private LocalDateTime finish;
-    private LocalDateTime total;
-    private Integer kp;
+    /**
+     * Create all.
+     */
+    void createAll();
 
+    /**
+     * Clear all.
+     */
+    void clearAll();
 }

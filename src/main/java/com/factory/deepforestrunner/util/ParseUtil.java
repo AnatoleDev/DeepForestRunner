@@ -81,7 +81,7 @@ public final class ParseUtil {
             .setActivities(nvl(parseCell(row, 3, formatter), ACTIVITIES))
             .setBirthday(
                 nvl(parseCell(row, 5, formatter), strDate -> LocalDate.parse(strDate, DATE_FORMAT)))
-            .setOrgId(nvl(parseCell(row, 0, formatter), name -> stringSubdivisionMap.get(name).getId()));
+            .setSubdivisionId(nvl(parseCell(row, 0, formatter), name -> stringSubdivisionMap.get(name).getId()));
     }
 
     private static final Function<String, List<Activity>> ACTIVITIES =

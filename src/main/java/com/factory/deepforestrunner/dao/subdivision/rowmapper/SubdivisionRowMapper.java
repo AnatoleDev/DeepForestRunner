@@ -17,11 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * SubdivisionRowMap data
+ * SubdivisionRowMapper data
  *
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
  */
-public class SubdivisionRowMap implements RowMapper<Subdivision> {
+public class SubdivisionRowMapper implements RowMapper<Subdivision> {
 
     @Override
     public Subdivision mapRow(

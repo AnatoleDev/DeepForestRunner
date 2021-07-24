@@ -17,6 +17,7 @@ import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.service.ActivityServices;
 import com.factory.deepforestrunner.service.FileService;
 import com.factory.deepforestrunner.service.ParticipantService;
+import com.factory.deepforestrunner.service.RunnerService;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import com.factory.deepforestrunner.util.ParseUtil;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,7 @@ public class FileServiceImpl implements FileService {
     private final SubdivisionService subdivisionService;
     private final ParticipantService participantService;
     private final ActivityServices activityServices;
+    private final RunnerService runnerService;
 
     @Override
     @Transactional
@@ -73,6 +75,8 @@ public class FileServiceImpl implements FileService {
             subdivisionService.createAll(createdSubdivision(workbook));
             participantService.createAll(createdParticipant(workbook));
 
+            runnerService.createAll();
+
             arrayInputStream.close();
         } catch (IOException | InvalidFormatException | ParseException e) {
             e.printStackTrace();
@@ -85,6 +89,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private void clearSystem() {
+        runnerService.clearAll();
         activityServices.clearAll();
         participantService.clearAll();
         subdivisionService.clearAll();

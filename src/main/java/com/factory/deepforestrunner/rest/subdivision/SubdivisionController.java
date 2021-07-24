@@ -10,15 +10,12 @@
 
 package com.factory.deepforestrunner.rest.subdivision;
 
-import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 /**
  * SubdivisionController data
@@ -36,16 +33,7 @@ public class SubdivisionController {
     public String list(
         final Model model
     ) {
-        final List<Subdivision> subdivisions = subdivisionService.list();
-        model.addAttribute("subdivisions", subdivisions);
-        return "subdivisions";
-    }
-
-    @GetMapping("/draw")
-    public String draw(
-        final Model model
-    ) {
-        model.addAttribute("subdivisions",  subdivisionService.list());
+        model.addAttribute("subdivisions", subdivisionService.list());
         return "subdivisions";
     }
 }

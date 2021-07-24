@@ -25,6 +25,7 @@ import java.util.List;
 
 import static com.factory.deepforestrunner.util.CommonUtil.LOCAL_DATE_2_DATE;
 import static com.factory.deepforestrunner.util.CommonUtil.nvl;
+import static com.factory.deepforestrunner.util.SqlUtil.SQL_long;
 
 /**
  * ParticipantDaoImpl data
@@ -50,7 +51,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
         final List<Participant> participants
     ) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO participant (fio, gender, birthday, org_id) VALUES(?,?,?,?) ON CONFLICT DO NOTHING",
+            "INSERT INTO participant (fio, gender, birthday, subdivision_id) VALUES(?,?,?,?) ON CONFLICT DO NOTHING",
             new BatchPreparedStatementSetter() {
 
                 public void setValues(
@@ -60,7 +61,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
                     ps.setString(1, participants.get(i).getFio());
                     ps.setString(2, nvl(participants.get(i).getGender(), Enum::name));
                     ps.setDate(3, LOCAL_DATE_2_DATE.apply(participants.get(i).getBirthday()));
-                    ps.setLong(4, participants.get(i).getOrgId());
+                    SQL_long(ps, 4, participants.get(i).getSubdivisionId());
                 }
 
                 public int getBatchSize() {

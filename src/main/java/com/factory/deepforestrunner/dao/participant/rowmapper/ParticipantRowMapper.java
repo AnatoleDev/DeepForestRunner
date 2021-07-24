@@ -37,6 +37,6 @@ public class ParticipantRowMapper implements RowMapper<Participant> {
             .setFio(resultSet.getString("fio"))
             .setGender(nvl(resultSet.getString("gender"), Gender::valueOf))
             .setBirthday(nvl(resultSet.getDate("birthday"), Date::toLocalDate))
-            .setOrgId(resultSet.getLong("org_id"));
+            .setSubdivisionId(resultSet.getLong("subdivision_id"));
     }
 }

@@ -8,12 +8,13 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.rest.participant;
+package com.factory.deepforestrunner.rest.runner;
 
-import com.factory.deepforestrunner.common.Gender;
+import com.factory.deepforestrunner.entity.Participant;
 import com.factory.deepforestrunner.entity.Subdivision;
-import com.factory.deepforestrunner.entity.dto.ParticipantDTO;
+import com.factory.deepforestrunner.entity.dto.RunnerDTO;
 import com.factory.deepforestrunner.service.ParticipantService;
+import com.factory.deepforestrunner.service.RunnerService;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,44 +27,42 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.factory.deepforestrunner.util.CommonUtil.DATE_FORMATTER;
-import static com.factory.deepforestrunner.util.CommonUtil.nvl;
+import static com.factory.deepforestrunner.rest.runner.util.RunnerUtil.runner_2_dto;
 
 /**
- * ParticipantController data
+ * RunnerController data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 22.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/participant")
-public class ParticipantController {
+@RequestMapping("/runner")
+public class RunnerController {
 
-    private final ParticipantService participantService;
+    private final RunnerService runnerService;
     private final SubdivisionService subdivisionService;
+    private final ParticipantService participantService;
 
     @GetMapping
     public String list(
         final Model model
     ) {
+
         final Map<Long, Subdivision> subdivisionMap = subdivisionService.list().stream()
             .collect(Collectors.toMap(Subdivision::getId, Function.identity()));
 
-        final List<ParticipantDTO> participants = participantService.list().stream()
-            .map(participant -> {
-                final Subdivision subdivision = subdivisionMap.getOrDefault(participant.getSubdivisionId(), new Subdivision());
-                return new ParticipantDTO()
-                    .setId(participant.getId())
-                    .setSubdivisionName(subdivision.getName())
-                    .setFio(participant.getFio())
-                    .setGender(nvl(participant.getGender(), Gender::getRus))
-                    .setNumber(subdivision.getNumber())
-                    .setBirthday(nvl(participant.getBirthday(), date -> date.format(DATE_FORMATTER)));
-            })
+        final Map<Long, Participant> participantMap = participantService.list().stream()
+            .collect(Collectors.toMap(Participant::getId, Function.identity()));
+
+        final List<RunnerDTO> runners = runnerService.list().stream()
+            .map(runner -> runner_2_dto(
+                runner,
+                participantMap.getOrDefault(runner.getParticipantId(), new Participant()),
+                subdivisionMap.getOrDefault(runner.getSubdivisionId(), new Subdivision()))
+            )
             .collect(Collectors.toList());
 
-        model.addAttribute("participants", participants);
-
-        return "participant";
+        model.addAttribute("runners", runners);
+        return "runner";
     }
 }
