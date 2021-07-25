@@ -2,43 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Список</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p>Список</p>
-
-<p>Кол-во:
-    <span th:text="${participants.size()}"> </span>
-</p>
-
-<table th:border="1">
-    <thead>
-    <tr>
-        <th>Подразделение</th>
-        <th>ФИО</th>
-        <th>Пол</th>
-        <th>Жеребьевка</th>
-        <th>Дата</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${participants.isEmpty()}">
-        <td colspan="2"> Подразделения отсутсвуют</td>
-    </tr>
-    <tr th:each="participant : ${participants} ">
-        <td><span th:text="${participant.subdivisionName}"></span></td>
-        <td><span th:text="${participant.fio}"></span></td>
-        <td><span th:text="${participant.gender}"></span></td>
-        <td><span th:text="${participant.number}"></span></td>
-        <td><span th:text="${participant.birthday}"></span></td>
-    </tr>
-    </tbody>
-</table>
 
 
-<a th:href="@{/}">
-    <button type="button">На главную</button>
-</a>
+<div id="wrapper">
 
+    <!-- ХЕДЕР С ЛОГОТИПОМ -->
+    <div id="header">
+            <a href="/" title="Главная">  <center> <img src="logo.png"> </center> </a>
+    </div>
+    
+    <div id="container">
+            <left>
+            <p>Список</p>
+
+            <p>Кол-во:
+                <span th:text="${participants.size()}"> </span>
+            </p>
+            </left>
+
+            <table th:border="1">
+                <thead>
+                <tr>
+                    <th>Подразделение</th>
+                    <th>ФИО</th>
+                    <th>Пол</th>
+                    <th>Жеребьевка</th>
+                    <th>Дата</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${participants.isEmpty()}">
+                    <td colspan="2"> Подразделения отсутсвуют</td>
+                </tr>
+                <tr th:each="participant : ${participants} ">
+                    <td><span th:text="${participant.subdivisionName}"></span></td>
+                    <td><span th:text="${participant.fio}"></span></td>
+                    <td><span th:text="${participant.gender}"></span></td>
+                    <td><span th:text="${participant.number}"></span></td>
+                    <td><span th:text="${participant.birthday}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <center>
+            <a th:href="@{/}">
+                <button type="button">На главную</button>
+            </a>
+            </center>
+
+    </div>
+
+    <div id="footer">
+        <center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены. </center>
+    </div>
+        
+</div>
+            
 </body>
 </html>

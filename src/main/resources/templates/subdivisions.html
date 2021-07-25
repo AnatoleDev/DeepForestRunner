@@ -2,40 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Жеребьевка</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="Жеребьевка"></p>
 
-<p>Кол-во:
-    <span th:text="${subdivisions.size()}"> </span>
-</p>
+ <div id="wrapper">
 
-<table th:border="1">
-    <thead>
-    <tr>
-        <th>Команда</th>
-        <th>Капитан</th>
-        <th>Телефон</th>
-        <th>№</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${subdivisions.isEmpty()}">
-        <td colspan="2"> Подразделения отсутсвуют</td>
-    </tr>
-    <tr th:each="subdivision : ${subdivisions} ">
-        <td><span th:text="${subdivision.name}"></span></td>
-        <td><span th:text="${subdivision.captain}"></span></td>
-        <td><span th:text="${subdivision.phone}"></span></td>
-        <td><span th:text="${subdivision.number}"></span></td>
-    </tr>
-    </tbody>
-</table>
+    <!-- ХЕДЕР С ЛОГОТИПОМ -->
+    <div id="header">
+        <a href="/" title="Главная">  <center> <img src="logo.png"> </center> </a>
+    </div>
+        
+    <div id="container">
 
-<a th:href="@{/}">
-    <button type="button">На главную</button>
-</a>
+        <p th:text="Жеребьевка"></p>
 
+        <p>Кол-во:
+            <span th:text="${subdivisions.size()}"> </span>
+        </p>
+
+        <table th:border="1">
+            <thead>
+            <tr>
+                <th>Команда</th>
+                <th>Капитан</th>
+                <th>Телефон</th>
+                <th>№</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${subdivisions.isEmpty()}">
+                <td colspan="2"> Подразделения отсутсвуют</td>
+            </tr>
+            <tr th:each="subdivision : ${subdivisions} ">
+                <td><span th:text="${subdivision.name}"></span></td>
+                <td><span th:text="${subdivision.captain}"></span></td>
+                <td><span th:text="${subdivision.phone}"></span></td>
+                <td><span th:text="${subdivision.number}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+
+        </center>
+        <a th:href="@{/}">
+            <button type="button">На главную</button>
+        </a>
+        </center>
+
+	</div>
+
+	<div id="footer">
+	<center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены. </center>
+	</div>
+	
+</div>
+        
 </body>
 </html>
