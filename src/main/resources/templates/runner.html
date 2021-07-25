@@ -2,83 +2,108 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Стартовый протокол участников</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 
-<p>Стартовый протокол Группа М</p>
-<p>Кол-во:
-    <span th:text="${mRunners.size()}"> </span>
-</p>
+<div id="wrapper">
 
-<table th:border="1">
-    <thead>
-    <tr>
-        <th>Подразделение</th>
-        <th>ФИО</th>
-        <th>Номер (нагрудный)</th>
-        <th>Старт</th>
-        <th>Финиш</th>
-        <th>Итоговое время</th>
-        <th>Не найдено КП</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${mRunners.isEmpty()}">
-        <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
-    </tr>
-    <tr th:each="runner : ${mRunners} ">
-        <td><span th:text="${runner.subdivision}"></span></td>
-        <td><span th:text="${runner.participant}"></span></td>
-        <td><span th:text="${runner.number}"></span></td>
-        <td><span th:text="${runner.start}"></span></td>
-        <td><span th:text="${runner.finish}"></span></td>
-        <td><span th:text="${runner.total}"></span></td>
-        <td><span th:text="${runner.kp}"></span></td>
-    </tr>
-    </tbody>
-</table>
+    <!-- ХЕДЕР С ЛОГОТИПОМ -->
+    <div id="header">
+            <a href="/" title="Главная">  <center> <img src="logo.png"> </center> </a>
+    </div>
+        
+    <div id="container">
+            <center>
+            <p><h2>Стартовый протокол Группа М</h2></p>
+            </center>
 
-<p>Стартовый протокол Группа Ж</p>
-<p>Кол-во:
-    <span th:text="${fRunners.size()}"> </span>
-</p>
+            <p>Кол-во:
+                <span th:text="${mRunners.size()}"> </span>
+            </p>
 
-<table th:border="1">
-    <thead>
-    <tr>
-        <th>Подразделение</th>
-        <th>ФИО</th>
-        <th>Номер (нагрудный)</th>
-        <th>Старт</th>
-        <th>Финиш</th>
-        <th>Итоговое время</th>
-        <th>Не найдено КП</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${fRunners.isEmpty()}">
-        <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
-    </tr>
-    <tr th:each="runner : ${fRunners} ">
-        <td><span th:text="${runner.subdivision}"></span></td>
-        <td><span th:text="${runner.participant}"></span></td>
-        <td><span th:text="${runner.number}"></span></td>
-        <td><span th:text="${runner.start}"></span></td>
-        <td><span th:text="${runner.finish}"></span></td>
-        <td><span th:text="${runner.total}"></span></td>
-        <td><span th:text="${runner.kp}"></span></td>
-    </tr>
-    </tbody>
-</table>
+            <table th:border="1">
+                <thead>
+                <tr>
+                    <th>Подразделение</th>
+                    <th>ФИО</th>
+                    <th>Номер (нагрудный)</th>
+                    <th>Старт</th>
+                    <th>Финиш</th>
+                    <th>Итоговое время</th>
+                    <th>Не найдено КП</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${mRunners.isEmpty()}">
+                    <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
+                </tr>
+                <tr th:each="runner : ${mRunners} ">
+                    <td><span th:text="${runner.subdivision}"></span></td>
+                    <td><span th:text="${runner.participant}"></span></td>
+                    <td><span th:text="${runner.number}"></span></td>
+                    <td><span th:text="${runner.start}"></span></td>
+                    <td><span th:text="${runner.finish}"></span></td>
+                    <td><span th:text="${runner.total}"></span></td>
+                    <td><span th:text="${runner.kp}"></span></td>
+                </tr>
+                </tbody>
+            </table>
 
-<p>Всего участников :
-    <span th:text="${fRunners.size()} + ${mRunners.size()}"> </span>
-</p>
+		    <center>
+            <p><h2>Стартовый протокол Группа Ж</h2></p>
+            </center>
 
-<a th:href="@{/}">
-    <button type="button">На главную</button>
-</a>
+            <p>Кол-во:
+                <span th:text="${fRunners.size()}"> </span>
+            </p>
+
+            <table th:border="1">
+                <thead>
+                <tr>
+                    <th>Подразделение</th>
+                    <th>ФИО</th>
+                    <th>Номер (нагрудный)</th>
+                    <th>Старт</th>
+                    <th>Финиш</th>
+                    <th>Итоговое время</th>
+                    <th>Не найдено КП</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${fRunners.isEmpty()}">
+                    <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
+                </tr>
+                <tr th:each="runner : ${fRunners} ">
+                    <td><span th:text="${runner.subdivision}"></span></td>
+                    <td><span th:text="${runner.participant}"></span></td>
+                    <td><span th:text="${runner.number}"></span></td>
+                    <td><span th:text="${runner.start}"></span></td>
+                    <td><span th:text="${runner.finish}"></span></td>
+                    <td><span th:text="${runner.total}"></span></td>
+                    <td><span th:text="${runner.kp}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p>Всего участников :
+                <span th:text="${fRunners.size()} + ${mRunners.size()}"> </span>
+            </p>
+
+            <left> 
+            <a th:href="@{/}">
+                <button type="button">На главную</button>
+            </a>
+            </left>
+    </div>
+
+    <div id="footer">
+    <center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены. </center>
+    </div>
+        
+</div>
 
 </body>
 </html>

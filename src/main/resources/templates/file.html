@@ -2,34 +2,55 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Жеребьевка</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="Файлы"></p>
 
+<div id="wrapper">
 
-<a th:href="@{/}">
-    <button type="button">На главную</button>
-</a>
-
-<p th:text="${file.name}"></p>
-<p th:text="${file.created}"></p>
-
-<section class="my-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h2>Загрузить данные из файла</h2>
-                <form method="post" th:action="@{/file}" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="file" name="file" class="form-control-file">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Загрузить</button>
-                </form>
-            </div>
-        </div>
+    <!-- ХЕДЕР С ЛОГОТИПОМ -->
+    <div id="header">
+        <a href="/" title="Главная">  <center> <img src="logo.png"> </center> </a>
     </div>
-</section>
+        
+    <div id="container">
+
+            <p th:text="Файлы"></p>
+
+            <center>
+            <a th:href="@{/}">
+                <button type="button">На главную</button>
+            </a>
+            </center>
+
+            <p th:text="${file.name}"></p>
+            <p th:text="${file.created}"></p>
+
+            <section class="my-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <h2>Загрузить данные из файла</h2>
+                            <form method="post" th:action="@{/file}" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <input type="file" name="file" class="form-control-file">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Загрузить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    </div>
+
+    <div id="footer">
+    <center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены. </center>
+    </div>
+
+</div>
 
 </body>
 </html>

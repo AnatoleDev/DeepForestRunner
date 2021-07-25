@@ -2,26 +2,42 @@
 <html>
 <head>
     <title>Главная</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 
-<a th:href="@{/subdivisions}">
-    <button type="button">Жеребьевка</button>
-</a>
-<a th:href="@{/participant}">
-    <button type="button">Список участников</button>
-</a>
+<div id="wrapper">
 
-<a th:href="@{/runner}">
-    <button type="button">Стартовый протокол</button>
-</a>
-
-<button>Сводная</button>
-
-<a th:href="@{/file}">
-    <button type="button">Файлы</button>
-</a>
-
+    <!-- ХЕДЕР С ЛОГОТИПОМ -->
+    <div id="header">
+        <a href="/" title="Главная">  <center> <img src="logo.png"> </center> </a>
+    </div>
+        
+    <div id="container">
+        <center>
+            <p><a th:href="@{/subdivisions}">
+                <button type="button">Жеребьевка</button>
+                </a>
+            <p><a th:href="@{/participant}">
+                <button type="button">Список участников</button>
+                </a>
+            <p><a th:href="@{/runner}">
+            <p><button type="button">Стартовый протокол</button>
+                </a>
+            <p><button>Сводная</button>
+            <p><a th:href="@{/file}">
+            <p><button type="button">Файлы</button>
+                </a>
+        </center>
+    </div>
+        
+    <div id="footer">
+    <center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены. </center>
+    </div>
+            
+</div>
+        
 </body>
 </html>
