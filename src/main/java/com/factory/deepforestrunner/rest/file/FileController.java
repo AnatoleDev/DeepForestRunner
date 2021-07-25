@@ -57,13 +57,12 @@ public class FileController {
 
     @PostMapping
     public String create(
-        @RequestParam("file") MultipartFile file,
-        Model model
+        @RequestParam("file") MultipartFile file
     ) {
         if (!file.isEmpty()) {
             fileService.create(file);
         }
 
-        return getFile(model);
+        return "redirect:/file";
     }
 }
