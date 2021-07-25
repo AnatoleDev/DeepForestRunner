@@ -2,19 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Жеребьевка</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="favicon.ico" >
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link rel="shortcut icon" href="favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 
- <div id="wrapper">
+<div id="wrapper">
 
     <!-- ХЕДЕР С ЛОГОТИПОМ -->
     <div id="header">
-        <a href="/" title="Главная">  <center> <img src="logo.png"> </center> </a>
+        <a href="/" title="Главная">
+            <center><img src="../static/img/logo.png"></center>
+        </a>
     </div>
-        
+
     <div id="container">
 
         <p th:text="Жеребьевка"></p>
@@ -51,13 +53,13 @@
         </a>
         </center>
 
-	</div>
+    </div>
 
-	<div id="footer">
-	<center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены. </center>
-	</div>
-	
+    <div id="footer">
+        <center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены.</center>
+    </div>
+
 </div>
-        
+
 </body>
 </html>
