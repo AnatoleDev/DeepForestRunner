@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление Подразделения</title>
+</head>
+<body>
+<form action="#" th:action="@{/subdivisions/create}" th:object="${subdivision}" method="post">
+    <table border="1">
+        <tr>
+            <td><label th:text="Имя"/></td>
+            <td><input type="text" th:field="${subdivision.name}"/></td>
+        </tr>
+        <tr>
+            <td><label th:text="number"/></td>
+            <td><input type="number" th:field="${subdivision.number}"/></td>
+        </tr>
+        <tr>
+            <td><label th:text="captain"/></td>
+            <td><input type="text" th:field="${subdivision.captain}"/></td>
+        </tr>
+        <tr>
+            <td>Телефон</td>
+            <td><input type="text" th:field="${subdivision.phone}"/></td>
+        </tr>
+    </table>
+    <input type="submit" value="Добавить"/>
+</form>
+
+</center>
+<a th:href="@{/subdivisions/list}">
+    <button type="button">Назад</button>
+</a>
+</center>
+
+
+</body>
+</html>

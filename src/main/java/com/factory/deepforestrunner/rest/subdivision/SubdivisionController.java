@@ -10,13 +10,15 @@
 
 package com.factory.deepforestrunner.rest.subdivision;
 
+import com.factory.deepforestrunner.entity.Subdivision;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -31,20 +33,74 @@ public class SubdivisionController {
 
     private final SubdivisionService subdivisionService;
 
-    @GetMapping
+    @GetMapping("/list")
     public String list(
         final Model model
     ) {
         model.addAttribute("subdivisions", subdivisionService.list());
-        return "subdivisions";
+        return "subdivisions/list";
     }
 
-    @PutMapping("{id}")
-    public String edit(
+    @GetMapping("/edit/{id}")
+    public String editForm(
         final Model model,
-        @PathVariable String id
+        @PathVariable final String id
     ) {
-        model.addAttribute("subdivisions", subdivisionService.list());
-        return "subdivisions";
+//        System.out.println(id);
+
+        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        return "subdivisions/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(
+        @ModelAttribute final Subdivision subdivision,
+        @PathVariable final String id
+    ) {
+//        System.out.println(id);
+
+//        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        return "redirect:/subdivisions/list";
+    }
+
+    @GetMapping("/create")
+    public String createForm(final Model model) {
+//        System.out.println(id);
+
+        model.addAttribute("subdivision", new Subdivision());
+        return "subdivisions/create";
+    }
+
+    @PostMapping("/create")
+    public String create(
+        @ModelAttribute final Subdivision subdivision,
+        final Model model
+    ) {
+//        System.out.println(id);
+
+//        model.addAttribute("subdivision", new Subdivision());
+        return "redirect:/subdivisions/list";
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteForm(
+        @PathVariable final String id,
+        final Model model
+    ) {
+        System.out.println(id);
+
+        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        return "subdivisions/delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(
+        @PathVariable final String id
+    ) {
+        System.out.println(id);
+
+//        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        return "redirect:/subdivisions/list";
     }
 }

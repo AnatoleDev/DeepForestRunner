@@ -3,7 +3,7 @@
 <head>
     <title>Жеребьевка</title>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="../favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
@@ -13,7 +13,7 @@
     <!-- ХЕДЕР С ЛОГОТИПОМ -->
     <div id="header">
         <a href="/" title="Главная">
-            <center><img src="../static/img/logo.png"></center>
+            <center><img src="/img/logo.png"></center>
         </a>
     </div>
 
@@ -32,6 +32,8 @@
                 <th>Капитан</th>
                 <th>Телефон</th>
                 <th>№</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -43,9 +45,13 @@
                 <td><span th:text="${subdivision.captain}"></span></td>
                 <td><span th:text="${subdivision.phone}"></span></td>
                 <td><span th:text="${subdivision.number}"></span></td>
+                <td><a class="btn btn-primary" th:href="@{/subdivisions/edit/{id}(id=${subdivision.id})}">Update</a>
+                <td><a class="btn btn-primary" th:href="@{/subdivisions/delete/{id}(id=${subdivision.id})}">delete</a>
             </tr>
             </tbody>
         </table>
+
+        <a class="btn" th:href="@{/subdivisions/create}" th:method="post">Добавить подразделение</a>
 
         </center>
         <a th:href="@{/}">
