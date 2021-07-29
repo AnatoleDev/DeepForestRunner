@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/subdivisions")
+@RequestMapping("/subdivision")
 public class SubdivisionController {
 
     private final SubdivisionService subdivisionService;
@@ -38,7 +38,7 @@ public class SubdivisionController {
         final Model model
     ) {
         model.addAttribute("subdivisions", subdivisionService.list());
-        return "subdivisions/list";
+        return "subdivision/list";
     }
 
     @GetMapping("/edit/{id}")
@@ -49,7 +49,7 @@ public class SubdivisionController {
 //        System.out.println(id);
 
         model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
-        return "subdivisions/edit";
+        return "subdivision/edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -60,7 +60,7 @@ public class SubdivisionController {
 //        System.out.println(id);
 
 //        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
-        return "redirect:/subdivisions/list";
+        return "redirect:/subdivision/list";
     }
 
     @GetMapping("/create")
@@ -68,7 +68,7 @@ public class SubdivisionController {
 //        System.out.println(id);
 
         model.addAttribute("subdivision", new Subdivision());
-        return "subdivisions/create";
+        return "subdivision/create";
     }
 
     @PostMapping("/create")
@@ -79,7 +79,7 @@ public class SubdivisionController {
 //        System.out.println(id);
 
 //        model.addAttribute("subdivision", new Subdivision());
-        return "redirect:/subdivisions/list";
+        return "redirect:/subdivision/list";
     }
 
 
@@ -91,7 +91,7 @@ public class SubdivisionController {
         System.out.println(id);
 
         model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
-        return "subdivisions/delete";
+        return "subdivision/delete";
     }
 
     @PostMapping("/delete/{id}")
@@ -101,6 +101,6 @@ public class SubdivisionController {
         System.out.println(id);
 
 //        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
-        return "redirect:/subdivisions/list";
+        return "redirect:/subdivision/list";
     }
 }

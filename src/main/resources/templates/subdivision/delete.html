@@ -5,7 +5,7 @@
     <title>Удаление Подразделения</title>
 </head>
 <body>
-<form action="#" th:action="@{/subdivisions/delete/{id}(id=${subdivision.id})}" th:object="${subdivision}" method="post">
+<form action="#" th:action="@{/subdivision/delete/{id}(id=${subdivision.id})}" th:object="${subdivision}" method="post">
     <p>Выбранное подразделение будет удалено из системы</p>
 
     <table border="1">

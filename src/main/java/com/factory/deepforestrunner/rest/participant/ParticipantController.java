@@ -42,7 +42,7 @@ public class ParticipantController {
     private final ParticipantService participantService;
     private final SubdivisionService subdivisionService;
 
-    @GetMapping
+    @GetMapping("/list")
     public String list(
         final Model model
     ) {
@@ -64,6 +64,6 @@ public class ParticipantController {
 
         model.addAttribute("participants", participants);
 
-        return "participant";
+        return "participant/list";
     }
 }

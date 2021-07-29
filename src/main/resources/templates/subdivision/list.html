@@ -45,13 +45,13 @@
                 <td><span th:text="${subdivision.captain}"></span></td>
                 <td><span th:text="${subdivision.phone}"></span></td>
                 <td><span th:text="${subdivision.number}"></span></td>
-                <td><a class="btn btn-primary" th:href="@{/subdivisions/edit/{id}(id=${subdivision.id})}">Update</a>
-                <td><a class="btn btn-primary" th:href="@{/subdivisions/delete/{id}(id=${subdivision.id})}">delete</a>
+                <td><a class="btn btn-primary" th:href="@{/subdivision/edit/{id}(id=${subdivision.id})}">Update</a>
+                <td><a class="btn btn-primary" th:href="@{/subdivision/delete/{id}(id=${subdivision.id})}">delete</a>
             </tr>
             </tbody>
         </table>
 
-        <a class="btn" th:href="@{/subdivisions/create}" th:method="post">Добавить подразделение</a>
+        <a class="btn" th:href="@{/subdivision/create}" th:method="post">Добавить подразделение</a>
 
         </center>
         <a th:href="@{/}">
