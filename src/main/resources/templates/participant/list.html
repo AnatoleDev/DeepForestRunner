@@ -31,10 +31,13 @@
             <thead>
             <tr>
                 <th>Подразделение</th>
+                <th>ПодразделениеMap</th>
                 <th>ФИО</th>
                 <th>Пол</th>
                 <th>Жеребьевка</th>
                 <th>Дата</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -42,14 +45,19 @@
                 <td colspan="2"> Подразделения отсутсвуют</td>
             </tr>
             <tr th:each="participant : ${participants} ">
+                <td><span th:text="${subdivisionMap.get(participant.getSubdivisionId()).name}"></span></td>
                 <td><span th:text="${participant.subdivisionName}"></span></td>
                 <td><span th:text="${participant.fio}"></span></td>
                 <td><span th:text="${participant.gender}"></span></td>
                 <td><span th:text="${participant.number}"></span></td>
                 <td><span th:text="${participant.birthday}"></span></td>
+                <td><a class="btn btn-primary" th:href="@{/participant/edit/{id}(id=${participant.id})}">Update</a>
+                <td><a class="btn btn-primary" th:href="@{/participant/delete/{id}(id=${participant.id})}">delete</a>
             </tr>
             </tbody>
         </table>
+
+        <a class="btn" th:href="@{/participant/create}" th:method="post">Добавить Участника</a>
 
         <center>
             <a th:href="@{/}">

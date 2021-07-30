@@ -28,6 +28,7 @@ public class ParticipantDTO implements Serializable {
 
     private Long id;
     private String subdivisionName;
+    private Long subdivisionId;
     private String fio;
     private String gender;
     private Integer number;

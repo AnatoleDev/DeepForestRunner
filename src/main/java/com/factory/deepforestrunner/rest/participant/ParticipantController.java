@@ -19,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -54,6 +57,7 @@ public class ParticipantController {
                 final Subdivision subdivision = subdivisionMap.getOrDefault(participant.getSubdivisionId(), new Subdivision());
                 return new ParticipantDTO()
                     .setId(participant.getId())
+                    .setSubdivisionId(participant.getSubdivisionId())
                     .setSubdivisionName(subdivision.getName())
                     .setFio(participant.getFio())
                     .setGender(nvl(participant.getGender(), Gender::getRus))
@@ -63,7 +67,61 @@ public class ParticipantController {
             .collect(Collectors.toList());
 
         model.addAttribute("participants", participants);
+        model.addAttribute("subdivisionMap", subdivisionMap);
 
         return "participant/list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editForm(
+        final Model model,
+        @PathVariable final String id
+    ) {
+//        System.out.println(id);
+
+        model.addAttribute("participant", participantService.list().stream().map(p -> new ParticipantDTO().setId(p.getId())).findFirst().orElse(new ParticipantDTO()));
+        return "participant/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(
+        @ModelAttribute final ParticipantDTO participant,
+        @PathVariable final String id
+    ) {
+        return "redirect:/participant/list";
+    }
+
+    @GetMapping("/create")
+    public String createForm(final Model model) {
+
+        model.addAttribute("participant", new ParticipantDTO());
+        return "participant/create";
+    }
+
+    @PostMapping("/create")
+    public String create(
+        @ModelAttribute final ParticipantDTO participant,
+        final Model model
+    ) {
+        return "redirect:/participant/list";
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteForm(
+        @PathVariable final String id,
+        final Model model
+    ) {
+        System.out.println(id);
+
+        model.addAttribute("participant", participantService.list().stream().map(p -> new ParticipantDTO().setId(p.getId())).findFirst().orElse(new ParticipantDTO()));
+        return "participant/delete";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(
+        @PathVariable final String id
+    ) {
+        return "redirect:/participant/list";
     }
 }

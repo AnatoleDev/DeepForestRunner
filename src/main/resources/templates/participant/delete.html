@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Удаление Участника</title>
+</head>
+<body>
+<form action="#" th:action="@{/participant/delete/{id}(id=${participant.id})}" th:object="${participant}" method="post">
+    <p>Выбранный участник будет удалено из системы</p>
+
+    <table border="1">
+        <tr>
+            <td><label th:text="subdivisionName"/></td>
+            <td><input type="text" th:field="${participant.subdivisionName}"/></td>
+        </tr>
+        <tr>
+            <td><label th:text="fio"/></td>
+            <td><input type="text" th:field="${participant.fio}"/></td>
+        </tr>
+        <tr>
+            <td><label th:text="gender"/></td>
+            <td><input type="text" th:field="${participant.gender}"/></td>
+        </tr>
+        <tr>
+            <td>number</td>
+            <td><input type="number" th:field="${participant.number}"/></td>
+        </tr>
+        <tr>
+            <td>birthday</td>
+            <td><input type="text" th:field="${participant.birthday}"/></td>
+        </tr>
+    </table>
+    <input type="submit" value="Удалить"/>
+</form>
+
+</center>
+<a th:href="@{/}">
+    <button type="button">На главную</button>
+</a>
+</center>
+
+
+</body>
+</html>
