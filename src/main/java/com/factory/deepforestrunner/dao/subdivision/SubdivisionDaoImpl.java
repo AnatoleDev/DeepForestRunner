@@ -47,7 +47,7 @@ public class SubdivisionDaoImpl implements SubdivisionDao {
         final List<Subdivision> createdSubdivisions
     ) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO subdivision (name, number, captain, phone) VALUES(?,?,?,?) ON CONFLICT DO NOTHING",
+            "INSERT INTO subdivision (name, number, captain, phone) VALUES(?,?,?,?) ON CONFLICT DO NOTHING;",
             new BatchPreparedStatementSetter() {
 
                 public void setValues(
@@ -69,5 +69,52 @@ public class SubdivisionDaoImpl implements SubdivisionDao {
     @Override
     public void clearAll() {
         jdbcTemplate.update("DELETE FROM subdivision");
+    }
+
+    @Override
+    public Subdivision get(final Long id) {
+        return jdbcTemplate.query(
+            "SELECT * FROM subdivision WHERE id = ?;",
+            new SubdivisionRowMapper(),
+            id
+        ).stream()
+            .findFirst()
+            .orElse(null);
+    }
+
+    @Override
+    public void update(
+        final Subdivision subdivision,
+        final Long id
+    ) {
+        jdbcTemplate.update(
+            "UPDATE subdivision " +
+                "SET name = ?, number = ?, captain = ?, phone = ? " +
+                "WHERE id = ?;",
+            subdivision.getName(),
+            subdivision.getNumber(),
+            subdivision.getCaptain(),
+            subdivision.getPhone(),
+            id
+        );
+    }
+
+    @Override
+    public void create(final Subdivision subdivision) {
+        jdbcTemplate.update(
+            "INSERT INTO subdivision (name, number, captain, phone) VALUES (?,?,?,?);",
+            subdivision.getName(),
+            subdivision.getNumber(),
+            subdivision.getCaptain(),
+            subdivision.getPhone()
+        );
+    }
+
+    @Override
+    public void delete(Long id) {
+        jdbcTemplate.update(
+            "DELETE FROM subdivision WHERE id = ?;",
+            id
+        );
     }
 }

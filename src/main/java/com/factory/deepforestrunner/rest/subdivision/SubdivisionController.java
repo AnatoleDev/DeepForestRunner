@@ -44,63 +44,49 @@ public class SubdivisionController {
     @GetMapping("/edit/{id}")
     public String editForm(
         final Model model,
-        @PathVariable final String id
+        @PathVariable final Long id
     ) {
-//        System.out.println(id);
-
-        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        model.addAttribute("subdivision", subdivisionService.get(id));
         return "subdivision/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String edit(
         @ModelAttribute final Subdivision subdivision,
-        @PathVariable final String id
+        @PathVariable final Long id
     ) {
-//        System.out.println(id);
-
-//        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        subdivisionService.update(subdivision, id);
         return "redirect:/subdivision/list";
     }
 
     @GetMapping("/create")
     public String createForm(final Model model) {
-//        System.out.println(id);
-
         model.addAttribute("subdivision", new Subdivision());
         return "subdivision/create";
     }
 
     @PostMapping("/create")
     public String create(
-        @ModelAttribute final Subdivision subdivision,
-        final Model model
+        @ModelAttribute final Subdivision subdivision
     ) {
-//        System.out.println(id);
-
-//        model.addAttribute("subdivision", new Subdivision());
+        subdivisionService.create(subdivision);
         return "redirect:/subdivision/list";
     }
 
-
     @GetMapping("/delete/{id}")
     public String deleteForm(
-        @PathVariable final String id,
+        @PathVariable final Long id,
         final Model model
     ) {
-        System.out.println(id);
-
-        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        model.addAttribute("subdivision", subdivisionService.get(id));
         return "subdivision/delete";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(
-        @PathVariable final String id
+        @PathVariable final Long id
     ) {
-        System.out.println(id);
-
-//        model.addAttribute("subdivision", subdivisionService.list().stream().findFirst().orElse(new Subdivision()));
+        subdivisionService.delete(id);
         return "redirect:/subdivision/list";
     }
 }

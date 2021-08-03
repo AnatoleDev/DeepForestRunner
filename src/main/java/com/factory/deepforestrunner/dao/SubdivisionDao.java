@@ -40,4 +40,38 @@ public interface SubdivisionDao {
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Get subdivision.
+     *
+     * @param id the id
+     * @return the subdivision
+     */
+    Subdivision get(Long id);
+
+
+    /**
+     * Update.
+     *
+     * @param subdivision the subdivision
+     * @param id          the id
+     */
+    void update(
+        Subdivision subdivision,
+        Long id
+    );
+
+    /**
+     * Create.
+     *
+     * @param subdivision the subdivision
+     */
+    void create(Subdivision subdivision);
+
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
+    void delete(Long id);
 }

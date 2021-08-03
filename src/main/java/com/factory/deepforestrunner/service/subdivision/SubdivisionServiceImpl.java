@@ -35,6 +35,13 @@ public class SubdivisionServiceImpl implements SubdivisionService {
     }
 
     @Override
+    public Subdivision get(final Long id) {
+        return subdivisionDao.get(id);
+    }
+
+
+
+    @Override
     public void createAll(
         final List<Subdivision> createdSubdivisions
     ) {
@@ -44,5 +51,23 @@ public class SubdivisionServiceImpl implements SubdivisionService {
     @Override
     public void clearAll() {
         subdivisionDao.clearAll();
+    }
+
+    @Override
+    public void update(
+        final Subdivision subdivision,
+        final Long id
+    ) {
+        subdivisionDao.update(subdivision, id);
+    }
+
+    @Override
+    public void create(final Subdivision subdivision) {
+        subdivisionDao.create(subdivision);
+    }
+
+    @Override
+    public void delete(final Long id) {
+        subdivisionDao.delete(id);
     }
 }

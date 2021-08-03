@@ -27,6 +27,13 @@ public interface SubdivisionService {
      */
     List<Subdivision> list();
 
+    /**
+     * Get subdivision.
+     *
+     * @param id the id
+     * @return the subdivision
+     */
+    Subdivision get(Long id);
 
     /**
      * Create all.
@@ -41,4 +48,29 @@ public interface SubdivisionService {
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Update.
+     *
+     * @param subdivision the subdivision
+     * @param id          the id
+     */
+    void update(
+        final Subdivision subdivision,
+        final Long id
+    );
+
+    /**
+     * Create.
+     *
+     * @param subdivision the subdivision
+     */
+    void create(Subdivision subdivision);
+
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
+    void delete(Long id);
 }
