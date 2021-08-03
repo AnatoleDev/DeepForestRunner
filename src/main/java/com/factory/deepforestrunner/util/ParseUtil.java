@@ -12,8 +12,8 @@ package com.factory.deepforestrunner.util;
 
 import com.factory.deepforestrunner.common.Activity;
 import com.factory.deepforestrunner.common.Gender;
-import com.factory.deepforestrunner.entity.Participant;
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.Participant;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;

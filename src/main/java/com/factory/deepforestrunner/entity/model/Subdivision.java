@@ -8,7 +8,7 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.entity;
+package com.factory.deepforestrunner.entity.model;
 
 import lombok.Getter;
 import lombok.Setter;

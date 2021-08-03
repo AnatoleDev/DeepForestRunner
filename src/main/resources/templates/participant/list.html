@@ -3,7 +3,7 @@
 <head>
     <title>Список</title>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="../favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
@@ -30,12 +30,11 @@
         <table th:border="1">
             <thead>
             <tr>
-                <th>Подразделение</th>
-                <th>ПодразделениеMap</th>
-                <th>ФИО</th>
-                <th>Пол</th>
-                <th>Жеребьевка</th>
-                <th>Дата</th>
+                <th th:text="${msg.subdivision}"></th>
+                <th th:text="${msg.fio}"></th>
+                <th th:text="${msg.gender}"></th>
+                <th th:text="${msg.number}"></th>
+                <th th:text="${msg.birthday}"></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -44,12 +43,11 @@
             <tr th:if="${participants.isEmpty()}">
                 <td colspan="2"> Подразделения отсутсвуют</td>
             </tr>
-            <tr th:each="participant : ${participants} ">
-                <td><span th:text="${subdivisionMap.get(participant.getSubdivisionId()).name}"></span></td>
-                <td><span th:text="${participant.subdivisionName}"></span></td>
+            <tr th:with="subdivision=${subdivisionMap.get(participant.subdivisionId)}" th:each="participant : ${participants} ">
+                <td><span th:if="${subdivision}" th:text="${subdivision.name}"></span></td>
                 <td><span th:text="${participant.fio}"></span></td>
-                <td><span th:text="${participant.gender}"></span></td>
-                <td><span th:text="${participant.number}"></span></td>
+                <td><span th:text="${T(com.factory.deepforestrunner.common.Gender).valueOf(participant.gender).rus}"></span></td>
+                <td><span th:if="${subdivision}" th:text="${subdivision.number}"></span></td>
                 <td><span th:text="${participant.birthday}"></span></td>
                 <td><a class="btn btn-primary" th:href="@{/participant/edit/{id}(id=${participant.id})}">Update</a>
                 <td><a class="btn btn-primary" th:href="@{/participant/delete/{id}(id=${participant.id})}">delete</a>

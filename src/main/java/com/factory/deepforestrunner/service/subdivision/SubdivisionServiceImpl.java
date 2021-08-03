@@ -11,7 +11,7 @@
 package com.factory.deepforestrunner.service.subdivision;
 
 import com.factory.deepforestrunner.dao.SubdivisionDao;
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

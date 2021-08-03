@@ -12,7 +12,7 @@ package com.factory.deepforestrunner.dao.runner;
 
 import com.factory.deepforestrunner.dao.RunnerDao;
 import com.factory.deepforestrunner.dao.runner.rowmapper.RunnerRowMapper;
-import com.factory.deepforestrunner.entity.Runner;
+import com.factory.deepforestrunner.entity.model.Runner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;

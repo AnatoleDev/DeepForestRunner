@@ -11,7 +11,7 @@
 package com.factory.deepforestrunner.dao.participant.rowmapper;
 
 import com.factory.deepforestrunner.common.Gender;
-import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.model.Participant;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.Date;

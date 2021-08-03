@@ -11,7 +11,7 @@
 package com.factory.deepforestrunner.service.participant;
 
 import com.factory.deepforestrunner.dao.ParticipantDao;
-import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.service.ActivityServices;
 import com.factory.deepforestrunner.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +53,15 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public void clearAll() {
         participantDao.clearAll();
+    }
+
+    @Override
+    public void delete(final Long id) {
+        participantDao.create(id);
+    }
+
+    @Override
+    public Participant get(final Long id) {
+        return participantDao.get(id);
     }
 }

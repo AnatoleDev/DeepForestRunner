@@ -10,15 +10,8 @@
 
 package com.factory.deepforestrunner.rest.runner.util;
 
-import com.factory.deepforestrunner.entity.Participant;
-import com.factory.deepforestrunner.entity.Runner;
-import com.factory.deepforestrunner.entity.Subdivision;
-import com.factory.deepforestrunner.entity.dto.RunnerDTO;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-
-import static com.factory.deepforestrunner.util.CommonUtil.DATE_TIME_HH_MM_SS_FORMATTER;
-import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
 /**
  * RunnerUtil data
@@ -36,20 +29,20 @@ public final class RunnerUtil {
      * @param subdivision the subdivision
      * @return the runner dto
      */
-    public static RunnerDTO runner_2_dto(
-        final Runner runner,
-        final Participant participant,
-        final Subdivision subdivision
-    ) {
-        return new RunnerDTO()
-            .setId(runner.getId())
-            .setSubdivision(subdivision.getName())
-            .setParticipant(participant.getFio())
-            .setNumber(runner.getNumber())
-            .setGender(participant.getGender())
-            .setStart(nvl(runner.getStart(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
-            .setFinish(nvl(runner.getFinish(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
-            .setTotal(nvl(runner.getTotal(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
-            .setKp(runner.getKp());
-    }
+//    public static RunnerDTO runner_2_dto(
+//        final Runner runner,
+//        final Participant participant,
+//        final Subdivision subdivision
+//    ) {
+//        return new RunnerDTO()
+//            .setId(runner.getId())
+//            .setSubdivision(subdivision.getName())
+//            .setParticipant(participant.getFio())
+//            .setNumber(runner.getNumber())
+//            .setGender(participant.getGender())
+//            .setStart(nvl(runner.getStart(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
+//            .setFinish(nvl(runner.getFinish(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
+//            .setTotal(nvl(runner.getTotal(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
+//            .setKp(runner.getKp());
+//    }
 }

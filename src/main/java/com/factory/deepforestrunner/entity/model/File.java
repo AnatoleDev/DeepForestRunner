@@ -8,33 +8,26 @@
  * Legal use of the software provides receipt of a license from the right holder only.
  */
 
-package com.factory.deepforestrunner.entity.dto;
+package com.factory.deepforestrunner.entity.model;
 
-import com.factory.deepforestrunner.common.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * Runner data
+ * File data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 21.07.2021.
  */
-@Setter
 @Getter
+@Setter
 @Accessors(chain = true)
-public class RunnerDTO implements Serializable {
+public class File {
 
     private Long id;
-    private String subdivision;
-    private String participant;
-    private Integer number;
-    private Gender gender;
-    private String start;
-    private String finish;
-    private String total;
-    private Integer kp;
-
+    private String name;
+    private LocalDateTime created;
+    private byte[] content;
 }

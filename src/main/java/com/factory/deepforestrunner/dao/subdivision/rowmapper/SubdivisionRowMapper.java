@@ -10,7 +10,7 @@
 
 package com.factory.deepforestrunner.dao.subdivision.rowmapper;
 
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

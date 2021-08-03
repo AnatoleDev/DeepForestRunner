@@ -10,7 +10,7 @@
 
 package com.factory.deepforestrunner.dao;
 
-import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.model.Participant;
 
 import java.util.List;
 
@@ -40,4 +40,19 @@ public interface ParticipantDao {
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Create.
+     *
+     * @param id the id
+     */
+    void create(Long id);
+
+    /**
+     * Get participant.
+     *
+     * @param id the id
+     * @return the participant
+     */
+    Participant get(Long id);
 }

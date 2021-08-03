@@ -10,7 +10,7 @@
 
 package com.factory.deepforestrunner.service;
 
-import com.factory.deepforestrunner.entity.File;
+import com.factory.deepforestrunner.entity.model.File;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

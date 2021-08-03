@@ -10,7 +10,7 @@
 
 package com.factory.deepforestrunner.service;
 
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 
 import java.util.List;
 

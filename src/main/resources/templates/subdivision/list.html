@@ -19,7 +19,7 @@
 
     <div id="container">
 
-        <p th:text="Жеребьевка"></p>
+        <p> Жеребьевка</p>
 
         <p>Кол-во:
             <span th:text="${subdivisions.size()}"> </span>
@@ -28,10 +28,10 @@
         <table th:border="1">
             <thead>
             <tr>
-                <th>Команда</th>
-                <th>Капитан</th>
-                <th>Телефон</th>
-                <th>№</th>
+                <th th:text="${msg.name}"></th>
+                <th th:text="${msg.captain}"></th>
+                <th th:text="${msg.phone}"></th>
+                <th th:text="${msg.number}"></th>
                 <th></th>
                 <th></th>
             </tr>

@@ -10,7 +10,7 @@
 
 package com.factory.deepforestrunner.dao.runner.rowmapper;
 
-import com.factory.deepforestrunner.entity.Runner;
+import com.factory.deepforestrunner.entity.model.Runner;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

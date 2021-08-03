@@ -11,7 +11,7 @@
 package com.factory.deepforestrunner.service.runner;
 
 import com.factory.deepforestrunner.dao.RunnerDao;
-import com.factory.deepforestrunner.entity.Runner;
+import com.factory.deepforestrunner.entity.model.Runner;
 import com.factory.deepforestrunner.service.ParticipantService;
 import com.factory.deepforestrunner.service.RunnerService;
 import lombok.RequiredArgsConstructor;

@@ -12,7 +12,7 @@ package com.factory.deepforestrunner.dao.subdivision;
 
 import com.factory.deepforestrunner.dao.SubdivisionDao;
 import com.factory.deepforestrunner.dao.subdivision.rowmapper.SubdivisionRowMapper;
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;

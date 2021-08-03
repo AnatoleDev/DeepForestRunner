@@ -11,9 +11,9 @@
 package com.factory.deepforestrunner.service.file;
 
 import com.factory.deepforestrunner.dao.FileDao;
-import com.factory.deepforestrunner.entity.File;
-import com.factory.deepforestrunner.entity.Participant;
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.File;
+import com.factory.deepforestrunner.entity.model.Participant;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 import com.factory.deepforestrunner.service.ActivityServices;
 import com.factory.deepforestrunner.service.FileService;
 import com.factory.deepforestrunner.service.ParticipantService;

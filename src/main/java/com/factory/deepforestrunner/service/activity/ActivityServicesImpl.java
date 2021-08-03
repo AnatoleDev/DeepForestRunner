@@ -11,7 +11,7 @@
 package com.factory.deepforestrunner.service.activity;
 
 import com.factory.deepforestrunner.dao.ActivityDao;
-import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.service.ActivityServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

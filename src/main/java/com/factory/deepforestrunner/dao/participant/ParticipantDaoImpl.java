@@ -12,7 +12,7 @@ package com.factory.deepforestrunner.dao.participant;
 
 import com.factory.deepforestrunner.dao.ParticipantDao;
 import com.factory.deepforestrunner.dao.participant.rowmapper.ParticipantRowMapper;
-import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.model.Participant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -73,5 +73,23 @@ public class ParticipantDaoImpl implements ParticipantDao {
     @Override
     public void clearAll() {
         jdbcTemplate.update("DELETE FROM participant");
+    }
+
+    @Override
+    public void create(final Long id) {
+        jdbcTemplate.update(
+            "DELETE FROM participant WHERE id = ?", id
+        );
+    }
+
+    @Override
+    public Participant get(Long id) {
+        return jdbcTemplate.query(
+            "SELECT * FROM participant WHERE id = ?;",
+            new ParticipantRowMapper(),
+            id
+        ).stream()
+            .findFirst()
+            .orElse(null);
     }
 }

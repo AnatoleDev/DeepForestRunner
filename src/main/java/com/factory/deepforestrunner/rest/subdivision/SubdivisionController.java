@@ -10,7 +10,8 @@
 
 package com.factory.deepforestrunner.rest.subdivision;
 
-import com.factory.deepforestrunner.entity.Subdivision;
+import com.factory.deepforestrunner.entity.model.Subdivision;
+import com.factory.deepforestrunner.entity.msg.SubdivisionMsg;
 import com.factory.deepforestrunner.service.SubdivisionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class SubdivisionController {
         final Model model
     ) {
         model.addAttribute("subdivisions", subdivisionService.list());
+        model.addAttribute("msg", SubdivisionMsg.INSTANCE);
         return "subdivision/list";
     }
 
@@ -47,6 +49,7 @@ public class SubdivisionController {
         @PathVariable final Long id
     ) {
         model.addAttribute("subdivision", subdivisionService.get(id));
+        model.addAttribute("msg", SubdivisionMsg.INSTANCE);
         return "subdivision/edit";
     }
 
@@ -62,6 +65,7 @@ public class SubdivisionController {
     @GetMapping("/create")
     public String createForm(final Model model) {
         model.addAttribute("subdivision", new Subdivision());
+        model.addAttribute("msg", SubdivisionMsg.INSTANCE);
         return "subdivision/create";
     }
 
@@ -79,6 +83,7 @@ public class SubdivisionController {
         final Model model
     ) {
         model.addAttribute("subdivision", subdivisionService.get(id));
+        model.addAttribute("msg", SubdivisionMsg.INSTANCE);
         return "subdivision/delete";
     }
 

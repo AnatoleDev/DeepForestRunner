@@ -10,19 +10,19 @@
 
     <table border="1">
         <tr>
-            <td><label>Название</label></td>
+            <td><label th:text="${msg.name}"></label></td>
             <td><input type="text" disabled th:field="${subdivision.name}"/></td>
         </tr>
         <tr>
-            <td><label>Жеребьевка</label></td>
+            <td><label th:text="${msg.number}"></label></td>
             <td><input type="number" disabled th:field="${subdivision.number}"/></td>
         </tr>
         <tr>
-            <td><label>Капитан</label></td>
+            <td><label th:text="${msg.captain}"></label></td>
             <td><input type="text" disabled th:field="${subdivision.captain}"/></td>
         </tr>
         <tr>
-            <td><label>Телефон</label></td>
+            <td><label th:text="${msg.phone}"></label></td>
             <td><input type="text" disabled th:field="${subdivision.phone}"/></td>
         </tr>
     </table>

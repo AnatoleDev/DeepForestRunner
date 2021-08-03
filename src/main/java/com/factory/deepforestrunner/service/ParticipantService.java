@@ -10,7 +10,7 @@
 
 package com.factory.deepforestrunner.service;
 
-import com.factory.deepforestrunner.entity.Participant;
+import com.factory.deepforestrunner.entity.model.Participant;
 
 import java.util.List;
 
@@ -40,4 +40,19 @@ public interface ParticipantService {
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
+    void delete(Long id);
+
+    /**
+     * Get participant.
+     *
+     * @param id the id
+     * @return the participant
+     */
+    Participant get(Long id);
 }

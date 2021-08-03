@@ -12,7 +12,7 @@ package com.factory.deepforestrunner.dao.file;
 
 import com.factory.deepforestrunner.dao.FileDao;
 import com.factory.deepforestrunner.dao.file.rowmapper.FileRowMapper;
-import com.factory.deepforestrunner.entity.File;
+import com.factory.deepforestrunner.entity.model.File;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

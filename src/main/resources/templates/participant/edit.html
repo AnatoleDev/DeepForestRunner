@@ -6,25 +6,31 @@
 </head>
 <body>
 <form action="#" th:action="@{/participant/edit/{id}(id=${participant.id})}" th:object="${participant}" method="post">
-    <table border="1">
+    <table border="1" th:with="subdivision=${subdivisionMap.get(participant.subdivisionId)}">
         <tr>
-            <td><label th:text="subdivisionName"/></td>
-            <td><input type="text" th:field="${participant.subdivisionName}"/></td>
+            <th th:text="${msg.subdivision}"></th>
+            <!--            <td><input type="text" th:field="${participant.subdivisionId}"/></td>-->
+            <td>
+                <select id="percentage" name="percentage">
+                    <option th:each="i : ${subdivisionMap.values()}" th:value="${id}" th:text="${id}">
+                    </option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td><label th:text="fio"/></td>
+            <th th:text="${msg.fio}"></th>
             <td><input type="text" th:field="${participant.fio}"/></td>
         </tr>
         <tr>
-            <td><label th:text="gender"/></td>
+            <th th:text="${msg.gender}"></th>
             <td><input type="text" th:field="${participant.gender}"/></td>
         </tr>
         <tr>
-            <td>number</td>
-            <td><input type="number" th:field="${participant.number}"/></td>
+            <th th:text="${msg.number}"></th>
+            <td><input disabled type="number" th:text="${subdivision.number}"/></td>
         </tr>
         <tr>
-            <td>birthday</td>
+            <th th:text="${msg.birthday}"></th>
             <td><input type="text" th:field="${participant.birthday}"/></td>
         </tr>
     </table>
