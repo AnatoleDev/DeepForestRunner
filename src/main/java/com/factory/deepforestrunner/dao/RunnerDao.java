@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.dao;
 
+import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
 
 import java.util.List;
@@ -20,6 +21,9 @@ import java.util.List;
  * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
  */
 public interface RunnerDao {
+    /**
+     * Clear all.
+     */
     void clearAll();
 
     /**
@@ -29,7 +33,12 @@ public interface RunnerDao {
      */
     List<Runner> list();
 
+    /**
+     * Create all.
+     *
+     * @param participants the participants
+     */
     void createAll(
-        List<Runner> createdSubdivisions
+        List<Participant> participants
     );
 }

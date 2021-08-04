@@ -79,7 +79,7 @@ public class SubdivisionDaoImpl implements SubdivisionDao {
             id
         ).stream()
             .findFirst()
-            .orElse(null);
+            .orElse(new Subdivision());
     }
 
     @Override

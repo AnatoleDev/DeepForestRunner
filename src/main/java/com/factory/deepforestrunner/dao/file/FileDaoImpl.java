@@ -59,7 +59,7 @@ public class FileDaoImpl implements FileDao {
         )
             .stream()
             .findFirst()
-            .orElse(null);
+            .orElse(new File());
     }
 
     @Override

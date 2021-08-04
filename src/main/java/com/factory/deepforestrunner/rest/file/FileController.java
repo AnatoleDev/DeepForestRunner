@@ -10,7 +10,6 @@
 
 package com.factory.deepforestrunner.rest.file;
 
-import com.factory.deepforestrunner.entity.model.File;
 import com.factory.deepforestrunner.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -37,16 +36,7 @@ public class FileController {
     public String getFile(
         final Model model
     ) {
-        final File file = fileService.getFile();
-//            .map(f -> new FileDTO()
-//                .setId(f.getId())
-//                .setName(f.getName())
-//                .setCreated(nvl(f.getCreated(), date -> date.format(DATE_TIME_FORMATTER)))
-//            )
-//            .orElse(new FileDTO());
-
-        model.addAttribute("file", file);
-
+        model.addAttribute("file", fileService.getFile());
         return "file";
     }
 
@@ -57,7 +47,6 @@ public class FileController {
         if (!file.isEmpty()) {
             fileService.create(file);
         }
-
         return "redirect:/file";
     }
 }

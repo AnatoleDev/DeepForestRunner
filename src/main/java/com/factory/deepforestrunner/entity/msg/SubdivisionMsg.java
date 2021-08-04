@@ -22,7 +22,7 @@ public final class SubdivisionMsg implements Serializable {
     public final static SubdivisionMsg INSTANCE = new SubdivisionMsg();
 
     public static final String id = "id";
-    public static final String name = "Подразделение";
+    public static final String name = "Название команды";
     public static final String number = "Жеребьевка";
     public static final String captain = "Капитан";
     public static final String phone = "Телефон";

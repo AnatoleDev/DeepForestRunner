@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 public class Runner {
 
     private Long id;
-    private Long subdivisionId;
     private Long participantId;
     private Integer number;
     private LocalDateTime start;

@@ -33,7 +33,6 @@ public class RunnerRowMapper implements RowMapper<Runner> {
     ) throws SQLException {
         return new Runner()
             .setId(resultSet.getLong("id"))
-            .setSubdivisionId(nvl(resultSet.getString("subdivision_id"), Long::new))
             .setParticipantId(nvl(resultSet.getString("participant_id"), Long::new))
             .setNumber(nvl(resultSet.getString("number"), Integer::new))
             .setStart(nvl(resultSet.getDate("start"), DATE_2_LOCAL_DATE_TIME))

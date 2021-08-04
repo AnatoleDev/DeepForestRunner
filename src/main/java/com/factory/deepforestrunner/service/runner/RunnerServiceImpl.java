@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * RunnerServiceImpl data
@@ -40,13 +39,7 @@ public class RunnerServiceImpl implements RunnerService {
 
     @Override
     public void createAll() {
-        runnerDao.createAll(
-            participantService.list().stream()
-                .map(part -> new Runner()
-                    .setSubdivisionId(part.getSubdivisionId())
-                    .setParticipantId(part.getId()))
-                .collect(Collectors.toList())
-        );
+        runnerDao.createAll(participantService.list());
     }
 
     @Override

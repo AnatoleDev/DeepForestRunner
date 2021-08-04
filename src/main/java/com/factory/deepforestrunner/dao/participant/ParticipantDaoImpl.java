@@ -90,7 +90,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
             id
         ).stream()
             .findFirst()
-            .orElse(null);
+            .orElse(new Participant());
     }
 
     @Override

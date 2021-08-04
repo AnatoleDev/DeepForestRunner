@@ -41,7 +41,7 @@
             </thead>
             <tbody>
             <tr th:if="${participants.isEmpty()}">
-                <td colspan="2"> Подразделения отсутсвуют</td>
+                <td colspan="2">Участники отсутсвуют</td>
             </tr>
             <tr th:with="subdivision=${subdivisionMap.get(participant.subdivisionId)}" th:each="participant : ${participants} ">
                 <td><span th:if="${subdivision}" th:text="${subdivision.name}"></span></td>

@@ -38,7 +38,7 @@
             </thead>
             <tbody>
             <tr th:if="${subdivisions.isEmpty()}">
-                <td colspan="2"> Подразделения отсутсвуют</td>
+                <td colspan="2">Команды отсутсвуют</td>
             </tr>
             <tr th:each="subdivision : ${subdivisions} ">
                 <td><span th:text="${subdivision.name}"></span></td>
