@@ -55,4 +55,15 @@ public interface ParticipantService {
      * @return the participant
      */
     Participant get(Long id);
+
+    /**
+     * Update.
+     *
+     * @param id          the id
+     * @param participant the participant
+     */
+    void update(
+        String id,
+        Participant participant
+    );
 }

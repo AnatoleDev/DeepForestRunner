@@ -55,4 +55,9 @@ public interface ParticipantDao {
      * @return the participant
      */
     Participant get(Long id);
+
+    void update(
+        String id,
+        Participant participant
+    );
 }

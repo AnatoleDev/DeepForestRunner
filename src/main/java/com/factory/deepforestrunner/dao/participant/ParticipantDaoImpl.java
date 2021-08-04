@@ -83,7 +83,7 @@ public class ParticipantDaoImpl implements ParticipantDao {
     }
 
     @Override
-    public Participant get(Long id) {
+    public Participant get(final Long id) {
         return jdbcTemplate.query(
             "SELECT * FROM participant WHERE id = ?;",
             new ParticipantRowMapper(),
@@ -91,5 +91,22 @@ public class ParticipantDaoImpl implements ParticipantDao {
         ).stream()
             .findFirst()
             .orElse(null);
+    }
+
+    @Override
+    public void update(
+        final String id,
+        final Participant participant
+    ) {
+        jdbcTemplate.update(
+            "UPDATE participant " +
+                "SET fio = ?, gender = ?, birthday = ?, subdivision_id = ? " +
+                "WHERE id = ?;",
+            participant.getFio(),
+            nvl(participant.getGender(), Enum::name),
+            LOCAL_DATE_2_DATE.apply(participant.getBirthday()),
+            participant.getSubdivisionId(),
+            id
+        );
     }
 }

@@ -55,8 +55,7 @@ public class ParticipantController {
         final Model model,
         @PathVariable final Long id
     ) {
-        final Participant participant = participantService.get(id);
-        model.addAttribute("participant", participant);
+        model.addAttribute("participant", participantService.get(id));
         model.addAttribute("subdivisionMap", subdivisionService.list().stream().collect(Collectors.toMap(Subdivision::getId, Function.identity())));
         model.addAttribute("msg", ParticipantMsg.INSTANCE);
         return "participant/edit";
@@ -67,6 +66,7 @@ public class ParticipantController {
         @ModelAttribute final Participant participant,
         @PathVariable final String id
     ) {
+        participantService.update(id, participant);
         return "redirect:/participant/list";
     }
 

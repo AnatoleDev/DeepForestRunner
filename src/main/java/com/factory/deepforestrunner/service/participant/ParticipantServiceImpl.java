@@ -64,4 +64,12 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Participant get(final Long id) {
         return participantDao.get(id);
     }
+
+    @Override
+    public void update(
+        final String id,
+        final Participant participant
+    ) {
+        participantDao.update(id, participant);
+    }
 }
