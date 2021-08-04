@@ -2,44 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование Подразделения</title>
+    <title>Редактирование Участников</title>
 </head>
 <body>
 <form action="#" th:action="@{/participant/edit/{id}(id=${participant.id})}" th:object="${participant}" method="post">
+
     <table border="1" th:with="subdivision=${subdivisionMap.get(participant.subdivisionId)}">
         <tr>
             <th th:text="${msg.subdivision}"></th>
-            <!--            <td><input type="text" th:field="${participant.subdivisionId}"/></td>-->
             <td>
-                <select id="percentage" name="percentage">
-                    <option th:each="i : ${subdivisionMap.values()}" th:value="${id}" th:text="${id}">
+                <select onchange="changeSubdivision(this.value)" th:field="*{subdivisionId}">
+                    <option value=""> --</option>
+                    <option th:each="subd : ${subdivisionMap.values()}"
+                            th:value="${subd.id}"
+                            th:text="${subd.name}">
                     </option>
                 </select>
             </td>
         </tr>
         <tr>
             <th th:text="${msg.fio}"></th>
-            <td><input type="text" th:field="${participant.fio}"/></td>
+            <td><input type="text" th:field="*{fio}"/></td>
         </tr>
         <tr>
             <th th:text="${msg.gender}"></th>
-            <td><input type="text" th:field="${participant.gender}"/></td>
+            <td>
+                <select th:field="*{gender}">
+                    <option th:each="gen : ${T(com.factory.deepforestrunner.common.Gender).values()}"
+                            th:value="${gen.name}"
+                            th:text="${gen.rus}">
+                    </option>
+                </select>
+
+            </td>
         </tr>
         <tr>
             <th th:text="${msg.number}"></th>
-            <td><input disabled type="number" th:text="${subdivision.number}"/></td>
+            <td><input id="subId" disabled type="number" th:field="*{subdivisionId}"/></td>
         </tr>
         <tr>
             <th th:text="${msg.birthday}"></th>
-            <td><input type="text" th:field="${participant.birthday}"/></td>
+            <td><input type="date" th:field="*{birthday}"/></td>
         </tr>
     </table>
     <input type="submit" value="Изменить"/>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var myVariable = /*[[${subdivisionMap}]]*/ {};
+
+        var changeSubdivision = function (id) {
+            document.getElementById("subId").value = myVariable[id].number;
+        }
+
+        /*]]>*/
+    </script>
 </form>
 
 </center>
-<a th:href="@{/}">
-    <button type="button">На главную</button>
+<a th:href="@{/participant/list}">
+    <button type="button">Назад</button>
 </a>
 </center>
 

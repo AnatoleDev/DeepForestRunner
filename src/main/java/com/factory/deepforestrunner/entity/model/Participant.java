@@ -15,6 +15,7 @@ import com.factory.deepforestrunner.common.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -33,6 +34,7 @@ public class Participant implements Serializable {
     private Long id;
     private String fio;
     private Gender gender;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birthday;
     private List<Activity> activities;
     private Long subdivisionId;
