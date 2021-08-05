@@ -19,16 +19,13 @@ CREATE TABLE IF NOT EXISTS participant
   subdivision_id INTEGER,
   PRIMARY KEY (id),
   UNIQUE (fio),
-  CONSTRAINT fk_subdivision FOREIGN KEY (subdivision_id) REFERENCES subdivision (id) ON UPDATE SET NULL
+  CONSTRAINT fk_subdivision
+    FOREIGN KEY (subdivision_id) REFERENCES subdivision (id) ON UPDATE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS file
 (
-  id INTEGER,
-  name VARCHAR(100) NOT NULL,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  content BYTEA     NOT NULL,
-  PRIMARY KEY (id)
+  id INTEGER, name VARCHAR(100) NOT NULL, created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, content BYTEA NOT NULL, PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS runner
@@ -41,14 +38,12 @@ CREATE TABLE IF NOT EXISTS runner
   total          TIMESTAMP,
   kp             INTEGER,
   PRIMARY KEY (id),
-  CONSTRAINT fk_participant FOREIGN KEY (participant_id) REFERENCES participant (id) ON UPDATE SET NULL
+  CONSTRAINT fk_participant
+    FOREIGN KEY (participant_id) REFERENCES participant (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS activity
 (
-  id INTEGER,
-  participant_id INTEGER NOT NULL,
-  type VARCHAR(10) NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_participant FOREIGN KEY (participant_id) REFERENCES participant (id) ON UPDATE SET NULL
+  id INTEGER, participant_id INTEGER NOT NULL, type VARCHAR(10) NOT NULL, PRIMARY KEY (id), CONSTRAINT fk_participant
+  FOREIGN KEY (participant_id) REFERENCES participant (id) ON UPDATE SET NULL
 );

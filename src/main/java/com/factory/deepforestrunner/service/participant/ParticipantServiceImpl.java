@@ -72,4 +72,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     ) {
         participantDao.update(id, participant);
     }
+
+    @Override
+    public void clearSubdivision(final Long id) {
+        participantDao.clearSubdivision(id);
+    }
 }

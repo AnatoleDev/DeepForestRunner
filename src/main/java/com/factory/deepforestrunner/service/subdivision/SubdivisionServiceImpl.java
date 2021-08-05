@@ -12,7 +12,9 @@ package com.factory.deepforestrunner.service.subdivision;
 
 import com.factory.deepforestrunner.dao.SubdivisionDao;
 import com.factory.deepforestrunner.entity.model.Subdivision;
+import com.factory.deepforestrunner.service.ParticipantService;
 import com.factory.deepforestrunner.service.SubdivisionService;
+import com.factory.deepforestrunner.service.participant.ParticipantServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ import java.util.List;
 public class SubdivisionServiceImpl implements SubdivisionService {
 
     private final SubdivisionDao subdivisionDao;
+    private final ParticipantService participantService;
 
     @Override
     public List<Subdivision> list() {
@@ -68,6 +71,7 @@ public class SubdivisionServiceImpl implements SubdivisionService {
 
     @Override
     public void delete(final Long id) {
+        participantService.clearSubdivision(id);
         subdivisionDao.delete(id);
     }
 }

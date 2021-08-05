@@ -66,4 +66,11 @@ public interface ParticipantService {
         String id,
         Participant participant
     );
+
+    /**
+     * Clear subdivision.
+     *
+     * @param id the id
+     */
+    void clearSubdivision(Long id);
 }

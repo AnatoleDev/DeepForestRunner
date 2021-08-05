@@ -109,4 +109,14 @@ public class ParticipantDaoImpl implements ParticipantDao {
             id
         );
     }
+
+    @Override
+    public void clearSubdivision(final Long id) {
+        jdbcTemplate.update(
+            "UPDATE participant " +
+                "SET subdivision_id = NULL " +
+                "WHERE subdivision_id = ?;",
+            id
+        );
+    }
 }

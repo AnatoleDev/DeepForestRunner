@@ -56,8 +56,21 @@ public interface ParticipantDao {
      */
     Participant get(Long id);
 
+    /**
+     * Update.
+     *
+     * @param id          the id
+     * @param participant the participant
+     */
     void update(
         String id,
         Participant participant
     );
+
+    /**
+     * Clear subdivision.
+     *
+     * @param id the id
+     */
+    void clearSubdivision(Long id);
 }
