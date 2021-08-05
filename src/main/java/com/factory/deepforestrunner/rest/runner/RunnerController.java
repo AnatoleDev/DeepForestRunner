@@ -10,6 +10,8 @@
 
 package com.factory.deepforestrunner.rest.runner;
 
+import com.factory.deepforestrunner.common.Gender;
+import com.factory.deepforestrunner.entity.dto.RunnerDTO;
 import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Subdivision;
 import com.factory.deepforestrunner.service.ParticipantService;
@@ -21,10 +23,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.factory.deepforestrunner.util.RunnerUtil.runner_2_dto;
 
 /**
  * RunnerController data
@@ -40,7 +45,7 @@ public class RunnerController {
     private final SubdivisionService subdivisionService;
     private final ParticipantService participantService;
 
-    @GetMapping
+    @GetMapping("/list")
     public String list(
         final Model model
     ) {
@@ -51,20 +56,21 @@ public class RunnerController {
         final Map<Long, Participant> participantMap = participantService.list().stream()
             .collect(Collectors.toMap(Participant::getId, Function.identity()));
 
-//        final Map<Gender, List<RunnerDTO>> runnerMap = runnerService.list().stream()
-//            .map(runner -> runner_2_dto(
-//                runner,
-//                participantMap.getOrDefault(runner.getParticipantId(), new Participant()),
-//                subdivisionMap.getOrDefault(runner.getSubdivisionId(), new Subdivision()))
-//            )
-//            .collect(Collectors.groupingBy(RunnerDTO::getGender));
+        final Map<Gender, List<RunnerDTO>> runnerMap = runnerService.list().stream()
+            .map(runner ->
+                {
+                    final Participant participant = participantMap.get(runner.getParticipantId());
+                    return runner_2_dto(
+                        runner,
+                        participant,
+                        subdivisionMap.getOrDefault(participant.getSubdivisionId(), new Subdivision()));
+                }
+            )
+            .collect(Collectors.groupingBy(RunnerDTO::getGender));
 
-//        model.addAttribute("mRunners", runnerMap.getOrDefault(Gender.M, Collections.emptyList()));
-//        model.addAttribute("fRunners", runnerMap.getOrDefault(Gender.F, Collections.emptyList()));
+        model.addAttribute("mRunners", runnerMap.getOrDefault(Gender.M, Collections.emptyList()));
+        model.addAttribute("fRunners", runnerMap.getOrDefault(Gender.F, Collections.emptyList()));
 
-        model.addAttribute("mRunners", new ArrayList<>());
-        model.addAttribute("fRunners", new ArrayList<>());
-
-        return "runner";
+        return "runner/list";
     }
 }
