@@ -48,4 +48,9 @@ public class ActivityServicesImpl implements ActivityServices {
         );
 
     }
+
+    @Override
+    public void deleteByParticipant(final Long participantId) {
+        activityDao.deleteByParticipant(participantId);
+    }
 }

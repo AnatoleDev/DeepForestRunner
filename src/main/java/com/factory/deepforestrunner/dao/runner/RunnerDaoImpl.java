@@ -21,9 +21,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
-
-import static com.factory.deepforestrunner.util.SqlUtil.SQL_long;
 
 /**
  * RunnerDaoImpl data
@@ -55,19 +54,36 @@ public class RunnerDaoImpl implements RunnerDao {
     ) {
         jdbcTemplate.batchUpdate(
             "INSERT INTO runner (participant_id) " +
-                "VALUES(?) ON CONFLICT DO NOTHING",
+                "VALUES((SELECT id FROM participant WHERE fio = ? LIMIT 1)) ON CONFLICT DO NOTHING",
             new BatchPreparedStatementSetter() {
 
                 public void setValues(
                     final PreparedStatement ps,
                     final int i
-                ) {
-                    SQL_long(ps, 1, runners.get(i).getId());
+                ) throws SQLException {
+                    ps.setString(1, runners.get(i).getFio());
                 }
 
                 public int getBatchSize() {
                     return runners.size();
                 }
             });
+    }
+
+    @Override
+    public void deleteByParticipant(final Long participantId) {
+        jdbcTemplate.update(
+            "DELETE FROM runner WHERE participant_id = ?", participantId
+        );
+    }
+
+    @Override
+    public void create(final Participant participant) {
+
+        jdbcTemplate.update(
+            "INSERT INTO runner (participant_id) " +
+                "VALUES((SELECT id FROM participant WHERE fio = ? LIMIT 1))",
+            participant.getFio()
+        );
     }
 }

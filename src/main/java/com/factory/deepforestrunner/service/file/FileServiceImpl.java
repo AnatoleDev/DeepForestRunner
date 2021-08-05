@@ -75,8 +75,6 @@ public class FileServiceImpl implements FileService {
             subdivisionService.createAll(createdSubdivision(workbook));
             participantService.createAll(createdParticipant(workbook));
 
-            runnerService.createAll();
-
             arrayInputStream.close();
         } catch (IOException | InvalidFormatException | ParseException e) {
             e.printStackTrace();

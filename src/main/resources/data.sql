@@ -45,5 +45,6 @@ CREATE TABLE IF NOT EXISTS runner
 CREATE TABLE IF NOT EXISTS activity
 (
   id INTEGER, participant_id INTEGER NOT NULL, type VARCHAR(10) NOT NULL, PRIMARY KEY (id), CONSTRAINT fk_participant
-  FOREIGN KEY (participant_id) REFERENCES participant (id) ON UPDATE SET NULL
+  FOREIGN KEY (participant_id) REFERENCES participant (id) ON UPDATE SET NULL,
+  UNIQUE (participant_id, type)
 );

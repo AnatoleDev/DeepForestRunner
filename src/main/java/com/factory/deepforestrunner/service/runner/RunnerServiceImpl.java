@@ -11,8 +11,8 @@
 package com.factory.deepforestrunner.service.runner;
 
 import com.factory.deepforestrunner.dao.RunnerDao;
+import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
-import com.factory.deepforestrunner.service.ParticipantService;
 import com.factory.deepforestrunner.service.RunnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,20 +30,28 @@ public class RunnerServiceImpl implements RunnerService {
 
     private final RunnerDao runnerDao;
 
-    private final ParticipantService participantService;
-
     @Override
     public List<Runner> list() {
         return runnerDao.list();
     }
 
     @Override
-    public void createAll() {
-        runnerDao.createAll(participantService.list());
+    public void createAll(List<Participant> participants) {
+        runnerDao.createAll(participants);
     }
 
     @Override
     public void clearAll() {
         runnerDao.clearAll();
+    }
+
+    @Override
+    public void deleteByParticipant(final Long participantId) {
+        runnerDao.deleteByParticipant(participantId);
+    }
+
+    @Override
+    public void create(final Participant participant) {
+        runnerDao.create(participant);
     }
 }

@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.dao.participant;
 
+import com.factory.deepforestrunner.common.Activity;
 import com.factory.deepforestrunner.dao.ParticipantDao;
 import com.factory.deepforestrunner.dao.participant.rowmapper.ParticipantRowMapper;
 import com.factory.deepforestrunner.entity.model.Participant;
@@ -68,6 +69,10 @@ public class ParticipantDaoImpl implements ParticipantDao {
                     return participants.size();
                 }
             });
+
+        participants.forEach(
+            this::insertActivityList
+        );
     }
 
     @Override
@@ -76,10 +81,16 @@ public class ParticipantDaoImpl implements ParticipantDao {
     }
 
     @Override
-    public void create(final Long id) {
+    public void create(final Participant participant) {
         jdbcTemplate.update(
-            "DELETE FROM participant WHERE id = ?", id
+            "INSERT INTO participant (fio, gender, birthday, subdivision_id) VALUES (?,?,?,?);",
+            participant.getFio(),
+            nvl(participant.getGender(), Enum::name),
+            LOCAL_DATE_2_DATE.apply(participant.getBirthday()),
+            participant.getSubdivisionId()
         );
+
+        insertActivityList(participant);
     }
 
     @Override
@@ -119,4 +130,34 @@ public class ParticipantDaoImpl implements ParticipantDao {
             id
         );
     }
+
+    @Override
+    public void delete(final Long participantId) {
+        jdbcTemplate.update(
+            "DELETE FROM participant WHERE id = ?", participantId
+        );
+    }
+
+    private void insertActivityList(Participant participant) {
+        final List<Activity> activities = participant.getActivities();
+
+        jdbcTemplate.batchUpdate(
+            "INSERT INTO activity (participant_id, type) VALUES(" +
+                "(SELECT id FROM participant WHERE fio = ? LIMIT 1),?) ON CONFLICT DO NOTHING",
+            new BatchPreparedStatementSetter() {
+
+                public void setValues(
+                    PreparedStatement ps,
+                    int i
+                ) throws SQLException {
+                    ps.setString(1, participant.getFio());
+                    ps.setString(2, nvl(activities.get(i), Enum::name));
+                }
+
+                public int getBatchSize() {
+                    return activities.size();
+                }
+            });
+    }
+
 }

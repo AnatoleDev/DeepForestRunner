@@ -44,9 +44,9 @@ public interface ParticipantDao {
     /**
      * Create.
      *
-     * @param id the id
+     * @param participant the id
      */
-    void create(Long id);
+    void create(Participant participant);
 
     /**
      * Get participant.
@@ -73,4 +73,11 @@ public interface ParticipantDao {
      * @param id the id
      */
     void clearSubdivision(Long id);
+
+    /**
+     * Delete.
+     *
+     * @param participantId the participant id
+     */
+    void delete(Long participantId);
 }

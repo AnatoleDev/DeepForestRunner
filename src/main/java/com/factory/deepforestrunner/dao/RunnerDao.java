@@ -41,4 +41,18 @@ public interface RunnerDao {
     void createAll(
         List<Participant> participants
     );
+
+    /**
+     * Delete by participant.
+     *
+     * @param participantId the participant id
+     */
+    void deleteByParticipant(Long participantId);
+
+    /**
+     * Create.
+     *
+     * @param participant the participant
+     */
+    void create(Participant participant);
 }

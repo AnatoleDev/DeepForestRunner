@@ -36,4 +36,11 @@ public interface ActivityServices {
         List<Participant> participants,
         Map<String, Long> partMap
     );
+
+    /**
+     * Delete by participant.
+     *
+     * @param id the id
+     */
+    void deleteByParticipant(Long id);
 }

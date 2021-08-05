@@ -14,12 +14,12 @@ import com.factory.deepforestrunner.dao.ParticipantDao;
 import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.service.ActivityServices;
 import com.factory.deepforestrunner.service.ParticipantService;
+import com.factory.deepforestrunner.service.RunnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * ParticipantServiceImpl data
@@ -32,6 +32,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     private final ParticipantDao participantDao;
     private final ActivityServices activityServices;
+    private final RunnerService runnerService;
 
     @Override
     public List<Participant> list() {
@@ -43,11 +44,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         final List<Participant> participants
     ) {
         participantDao.createAll(participants);
-
-        final Map<String, Long> partMap = participantDao.list().stream()
-            .collect(Collectors.toMap(Participant::getFio, Participant::getId));
-
-        activityServices.createAll(participants, partMap);
+        runnerService.createAll(participants);
     }
 
     @Override
@@ -56,8 +53,11 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public void delete(final Long id) {
-        participantDao.create(id);
+    @Transactional
+    public void delete(final Long participantId) {
+        runnerService.deleteByParticipant(participantId);
+        activityServices.deleteByParticipant(participantId);
+        participantDao.delete(participantId);
     }
 
     @Override
@@ -76,5 +76,12 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public void clearSubdivision(final Long id) {
         participantDao.clearSubdivision(id);
+    }
+
+    @Override
+    @Transactional
+    public void create(final Participant participant) {
+        participantDao.create(participant);
+        runnerService.create(participant);
     }
 }

@@ -35,4 +35,11 @@ public interface ActivityDao {
         List<Activity> activities,
         Long partID
     );
+
+    /**
+     * Delete by participant.
+     *
+     * @param participantId the participant id
+     */
+    void deleteByParticipant(Long participantId);
 }

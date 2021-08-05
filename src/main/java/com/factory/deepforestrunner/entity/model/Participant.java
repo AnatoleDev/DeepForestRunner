@@ -19,6 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,8 +35,8 @@ public class Participant implements Serializable {
     private Long id;
     private String fio;
     private Gender gender;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private List<Activity> activities;
+    private List<Activity> activities = Collections.singletonList(Activity.O);
     private Long subdivisionId;
 }

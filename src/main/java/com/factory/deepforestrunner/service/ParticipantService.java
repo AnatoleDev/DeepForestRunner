@@ -73,4 +73,11 @@ public interface ParticipantService {
      * @param id the id
      */
     void clearSubdivision(Long id);
+
+    /**
+     * Create.
+     *
+     * @param participant the participant
+     */
+    void create(Participant participant);
 }

@@ -10,6 +10,7 @@
 
 package com.factory.deepforestrunner.service;
 
+import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
 
 import java.util.List;
@@ -29,11 +30,27 @@ public interface RunnerService {
 
     /**
      * Create all.
+     *
+     * @param participants the participants
      */
-    void createAll();
+    void createAll(List<Participant> participants);
 
     /**
      * Clear all.
      */
     void clearAll();
+
+    /**
+     * Delete by participant.
+     *
+     * @param participantId the participant id
+     */
+    void deleteByParticipant(Long participantId);
+
+    /**
+     * Create.
+     *
+     * @param participant the participant
+     */
+    void create(Participant participant);
 }

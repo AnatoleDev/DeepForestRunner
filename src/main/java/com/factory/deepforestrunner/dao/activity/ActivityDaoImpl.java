@@ -63,4 +63,11 @@ public class ActivityDaoImpl implements ActivityDao {
                 }
             });
     }
+
+    @Override
+    public void deleteByParticipant(final Long participantId) {
+        jdbcTemplate.update(
+            "DELETE FROM activity WHERE participant_id = ?", participantId
+        );
+    }
 }

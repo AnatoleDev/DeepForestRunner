@@ -74,30 +74,26 @@ public class ParticipantController {
     public String createForm(final Model model) {
 
         model.addAttribute("participant", new Participant());
+        model.addAttribute("subdivisionMap", subdivisionService.list().stream().collect(Collectors.toMap(Subdivision::getId, Function.identity())));
         model.addAttribute("msg", ParticipantMsg.INSTANCE);
         return "participant/create";
     }
 
     @PostMapping("/create")
     public String create(
-        @ModelAttribute final Participant participant,
-        final Model model
+        @ModelAttribute final Participant participant
     ) {
+        participantService.create(participant);
         return "redirect:/participant/list";
     }
 
-
     @GetMapping("/delete/{id}")
     public String deleteForm(
-        @PathVariable final String id,
+        @PathVariable final long id,
         final Model model
     ) {
-        final Participant participant = participantService.list().stream()
-
-            .findFirst()
-            .orElse(new Participant());
-
-        model.addAttribute("participant", participant);
+        model.addAttribute("participant", participantService.get(id));
+        model.addAttribute("subdivisionMap", subdivisionService.list().stream().collect(Collectors.toMap(Subdivision::getId, Function.identity())));
         model.addAttribute("msg", ParticipantMsg.INSTANCE);
         return "participant/delete";
     }
