@@ -105,13 +105,35 @@ public class RunnerServiceImpl implements RunnerService {
         final List<Subdivision> subdivisions,
         final List<Participant> participants
     ) {
+        final Map<Gender, List<RunnerNumber>> genderRunnerMap = getGenderRunnerMap(subdivisions, participants);
+
+        final AtomicInteger number = new AtomicInteger(1);
+
+        initRunnerNumber(
+            genderRunnerMap.get(Gender.M).stream().collect(Collectors.groupingBy(RunnerNumber::getSubNumber)),
+            number
+        );
+
+        number.set(number.get() + BETWEEN_NUMBER);
+
+        initRunnerNumber(
+            genderRunnerMap.get(Gender.F).stream().collect(Collectors.groupingBy(RunnerNumber::getSubNumber)),
+            number
+        );
+
+    }
+
+    private Map<Gender, List<RunnerNumber>> getGenderRunnerMap(
+        List<Subdivision> subdivisions,
+        List<Participant> participants
+    ) {
         final Map<Long, Subdivision> subdivisionMap = subdivisions.stream()
             .collect(Collectors.toMap(Subdivision::getId, Function.identity()));
 
         final Map<Long, Participant> participantMap = participants.stream()
             .collect(Collectors.toMap(Participant::getId, Function.identity()));
 
-        final Map<Gender, List<RunnerNumber>> genderRunnerMap = list().stream().map(runner -> {
+        return list().stream().map(runner -> {
                 final Participant participant = participantMap.getOrDefault(runner.getParticipantId(), new Participant());
                 final Subdivision subdivision = subdivisionMap.getOrDefault(participant.getSubdivisionId(), new Subdivision());
 
@@ -122,28 +144,6 @@ public class RunnerServiceImpl implements RunnerService {
                 );
             }
         ).collect(Collectors.groupingBy(RunnerNumber::getGender));
-
-        final Map<Integer, List<RunnerNumber>> maleRunnerNumbers = genderRunnerMap.get(Gender.M).stream()
-            .collect(Collectors.groupingBy(RunnerNumber::getSubNumber));
-
-        final Map<Integer, List<RunnerNumber>> femaleRunnerNumbers = genderRunnerMap.get(Gender.F).stream()
-            .collect(Collectors.groupingBy(RunnerNumber::getSubNumber));
-
-
-        AtomicInteger number = new AtomicInteger(1);
-
-        initRunnerNumber(
-            maleRunnerNumbers,
-            number
-        );
-
-        number.set(number.get() + BETWEEN_NUMBER);
-
-        initRunnerNumber(
-            femaleRunnerNumbers,
-            number
-        );
-
     }
 
     private void initRunnerNumber(
