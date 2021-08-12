@@ -10,16 +10,23 @@
 
 package com.factory.deepforestrunner.service.runner;
 
+import com.factory.deepforestrunner.common.Gender;
 import com.factory.deepforestrunner.dao.RunnerDao;
 import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 import com.factory.deepforestrunner.service.RunnerService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
@@ -32,6 +39,7 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 public class RunnerServiceImpl implements RunnerService {
 
+    private static final Integer BETWEEN_NUMBER = 5;
     private static final Function<Integer, LocalTime> START_TIME = number -> LocalTime.of(0, 0, 0).plusSeconds(number * 60);
 
     private final RunnerDao runnerDao;
@@ -90,5 +98,85 @@ public class RunnerServiceImpl implements RunnerService {
         Integer kp
     ) {
         runnerDao.setKp(id, kp);
+    }
+
+    @Override
+    public void initNumber(
+        final List<Subdivision> subdivisions,
+        final List<Participant> participants
+    ) {
+        final Map<Long, Subdivision> subdivisionMap = subdivisions.stream()
+            .collect(Collectors.toMap(Subdivision::getId, Function.identity()));
+
+        final Map<Long, Participant> participantMap = participants.stream()
+            .collect(Collectors.toMap(Participant::getId, Function.identity()));
+
+        final Map<Gender, List<RunnerNumber>> genderRunnerMap = list().stream().map(runner -> {
+                final Participant participant = participantMap.getOrDefault(runner.getParticipantId(), new Participant());
+                final Subdivision subdivision = subdivisionMap.getOrDefault(participant.getSubdivisionId(), new Subdivision());
+
+                return new RunnerNumber(
+                    runner.getId(),
+                    subdivision.getNumber(),
+                    participant.getGender()
+                );
+            }
+        ).collect(Collectors.groupingBy(RunnerNumber::getGender));
+
+        final Map<Integer, List<RunnerNumber>> maleRunnerNumbers = genderRunnerMap.get(Gender.M).stream()
+            .collect(Collectors.groupingBy(RunnerNumber::getSubNumber));
+
+        final Map<Integer, List<RunnerNumber>> femaleRunnerNumbers = genderRunnerMap.get(Gender.F).stream()
+            .collect(Collectors.groupingBy(RunnerNumber::getSubNumber));
+
+
+        AtomicInteger number = new AtomicInteger(1);
+
+        initRunnerNumber(
+            maleRunnerNumbers,
+            number
+        );
+
+        number.set(number.get() + BETWEEN_NUMBER);
+
+        initRunnerNumber(
+            femaleRunnerNumbers,
+            number
+        );
+
+    }
+
+    private void initRunnerNumber(
+        Map<Integer, List<RunnerNumber>> runnerNumbers,
+        AtomicInteger number
+    ) {
+        int maxMaleCount = runnerNumbers.values().stream().map(List::size).max(Integer::compareTo).orElse(0);
+        int maxSubMaleCount = runnerNumbers.keySet().stream().max(Integer::compareTo).orElse(0);
+        for (int i = 0; i < maxMaleCount; i++) {
+
+            for (int j = 1; j <= maxSubMaleCount; j++) {
+
+                int finalI = i;
+                Optional.ofNullable(runnerNumbers.get(j))
+                    .flatMap(
+                        list -> list.stream()
+                            .skip(finalI)
+                            .findFirst())
+                    .ifPresent(
+                        runnerNumber -> {
+                            final int andIncrement = number.getAndIncrement();
+                            runnerDao.setNumber(runnerNumber.runnerId, andIncrement, START_TIME.apply(andIncrement));
+                        });
+            }
+        }
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    private class RunnerNumber {
+
+        private final Long runnerId;
+        private final Integer subNumber;
+        private final Gender gender;
     }
 }

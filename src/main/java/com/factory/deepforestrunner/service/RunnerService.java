@@ -12,6 +12,7 @@ package com.factory.deepforestrunner.service;
 
 import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
+import com.factory.deepforestrunner.entity.model.Subdivision;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -87,5 +88,16 @@ public interface RunnerService {
     void setKp(
         Long id,
         Integer kp
+    );
+
+    /**
+     * Init number.
+     *
+     * @param subdivisions the subdivisions
+     * @param participants
+     */
+    void initNumber(
+        List<Subdivision> subdivisions,
+        List<Participant> participants
     );
 }
