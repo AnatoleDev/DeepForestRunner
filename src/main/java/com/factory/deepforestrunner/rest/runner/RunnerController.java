@@ -21,7 +21,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +32,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.factory.deepforestrunner.util.CommonUtil.STRING_LOCAL_TIME_FUNCTION;
+import static com.factory.deepforestrunner.util.CommonUtil.nvBlank;
 import static com.factory.deepforestrunner.util.RunnerUtil.runner_2_dto;
 
 /**
@@ -72,5 +77,35 @@ public class RunnerController {
         model.addAttribute("fRunners", runnerMap.getOrDefault(Gender.F, Collections.emptyList()));
 
         return "runner/list";
+    }
+
+    @PostMapping("/number/{id}")
+    public String number(
+        @RequestParam final String number,
+        @PathVariable final Long id
+    ) {
+        runnerService.setNumber(id, nvBlank(number, Integer::valueOf));
+        return "redirect:/runner/list";
+    }
+
+    @PostMapping("/finish/{id}")
+    public String finish(
+        @RequestParam final String finish,
+        @PathVariable final Long id
+    ) {
+        runnerService.setFinish(
+            id,
+            STRING_LOCAL_TIME_FUNCTION.apply(finish)
+        );
+        return "redirect:/runner/list";
+    }
+
+    @PostMapping("/kp/{id}")
+    public String kp(
+        @RequestParam final String kp,
+        @PathVariable final Long id
+    ) {
+        runnerService.setKp(id, nvBlank(kp, Integer::new));
+        return "redirect:/runner/list";
     }
 }

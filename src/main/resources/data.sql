@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS participant
   birthday       TIMESTAMP,
   subdivision_id INTEGER,
   PRIMARY KEY (id),
-  UNIQUE (fio),
+  UNIQUE (fio, subdivision_id),
   CONSTRAINT fk_subdivision
     FOREIGN KEY (subdivision_id) REFERENCES subdivision (id) ON UPDATE SET NULL
 );

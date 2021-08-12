@@ -14,8 +14,10 @@ import com.factory.deepforestrunner.common.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 
 /**
  * RunnerDTO data
@@ -32,9 +34,13 @@ public class RunnerDTO implements Serializable {
     private String participant;
     private Integer number;
     private Gender gender;
-    private String start;
-    private String finish;
-    private String total;
+
+    @DateTimeFormat(pattern = "hh:mm:ss")
+    private LocalTime start;
+    @DateTimeFormat(pattern = "hh:mm:ss")
+    private LocalTime finish;
+    @DateTimeFormat(pattern = "hh:mm:ss")
+    private LocalTime total;
     private Integer kp;
 
 }

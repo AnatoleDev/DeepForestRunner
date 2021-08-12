@@ -30,6 +30,7 @@
             <thead>
             <tr>
                 <th>Подразделение</th>
+                <th>!</th>
                 <th>ФИО</th>
                 <th>Номер (нагрудный)</th>
                 <th>Старт</th>
@@ -42,14 +43,34 @@
             <tr th:if="${mRunners.isEmpty()}">
                 <td colspan="2">Список участников спортивного ориентирования не сформирован</td>
             </tr>
+
             <tr th:each="runner : ${mRunners} ">
+
                 <td><span th:text="${runner.subdivision}"></span></td>
+                <td>#</td>
                 <td><span th:text="${runner.participant}"></span></td>
-                <td><span th:text="${runner.number}"></span></td>
-                <td><span th:text="${runner.start}"></span></td>
-                <td><span th:text="${runner.finish}"></span></td>
-                <td><span th:text="${runner.total}"></span></td>
-                <td><span th:text="${runner.kp}"></span></td>
+                <td>
+                    <form action="#" th:action="@{/runner/number/{id}(id=${runner.id})}" method="post">
+                        <input type="number" th:value="${runner.number}" name="number"/>
+                    </form>
+                </td>
+
+                <td><input type="time" th:disabled="true" th:value="${runner.start}" step="1"/></td>
+
+                <td>
+                    <form action="#" th:action="@{/runner/finish/{id}(id=${runner.id})}" method="post">
+                        <input type="time" th:value="${runner.finish}" name="finish" step="1"/>
+                        <input th:hidden="true" type="submit"/>
+                    </form>
+                </td>
+
+                <td><input type="time" th:disabled="true" th:value="${runner.total}" step="1"/></td>
+
+                <td>
+                    <form action="#" th:action="@{/runner/kp/{id}(id=${runner.id})}" method="post">
+                        <input type="number" th:value="${runner.kp}" name="kp"/>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

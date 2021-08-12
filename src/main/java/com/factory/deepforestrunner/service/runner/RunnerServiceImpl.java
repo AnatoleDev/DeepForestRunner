@@ -17,7 +17,11 @@ import com.factory.deepforestrunner.service.RunnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
+import java.util.function.Function;
+
+import static java.util.Objects.nonNull;
 
 /**
  * RunnerServiceImpl data
@@ -27,6 +31,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RunnerServiceImpl implements RunnerService {
+
+    private static final Function<Integer, LocalTime> START_TIME = number -> LocalTime.of(0, 0, 0).plusSeconds(number * 60);
 
     private final RunnerDao runnerDao;
 
@@ -53,5 +59,36 @@ public class RunnerServiceImpl implements RunnerService {
     @Override
     public void create(final Participant participant) {
         runnerDao.create(participant);
+    }
+
+    @Override
+    public void setNumber(
+        Long id,
+        Integer number
+    ) {
+        runnerDao.setNumber(id, number, START_TIME.apply(number));
+    }
+
+    @Override
+    public void setFinish(
+        Long id,
+        LocalTime finish
+    ) {
+        LocalTime totalTime = null;
+
+        final Runner runner = runnerDao.getRunnerByid(id);
+
+        if (nonNull(runner) && nonNull(runner.getStart()) && nonNull(finish)) {
+            totalTime = finish.minusSeconds(runner.getStart().toSecondOfDay());
+        }
+        runnerDao.setFinish(id, finish, totalTime);
+    }
+
+    @Override
+    public void setKp(
+        Long id,
+        Integer kp
+    ) {
+        runnerDao.setKp(id, kp);
     }
 }

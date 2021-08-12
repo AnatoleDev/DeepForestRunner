@@ -13,6 +13,7 @@ package com.factory.deepforestrunner.service;
 import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
 
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -53,4 +54,38 @@ public interface RunnerService {
      * @param participant the participant
      */
     void create(Participant participant);
+
+    /**
+     * Sets number.
+     *
+     * @param id     the id
+     * @param number the number
+     */
+    void setNumber(
+        Long id,
+        Integer number
+    );
+
+
+    /**
+     * Sets finish.
+     *
+     * @param id     the id
+     * @param finish the finish
+     */
+    void setFinish(
+        Long id,
+        LocalTime finish
+    );
+
+    /**
+     * Sets kp.
+     *
+     * @param id the id
+     * @param kp the kp
+     */
+    void setKp(
+        Long id,
+        Integer kp
+    );
 }

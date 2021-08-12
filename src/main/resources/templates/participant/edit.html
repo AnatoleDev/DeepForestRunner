@@ -11,7 +11,7 @@
         <tr>
             <th th:text="${msg.subdivision}"></th>
             <td>
-                <select onchange="changeSubdivision(this.value)" th:field="*{subdivisionId}">
+                <select onchange="changeSubdivision(this.value, )" th:field="*{subdivisionId}">
                     <option value=""> --</option>
                     <option th:each="subd : ${subdivisionMap.values()}"
                             th:value="${subd.id}"

@@ -17,9 +17,6 @@ import com.factory.deepforestrunner.entity.model.Subdivision;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-import static com.factory.deepforestrunner.util.CommonUtil.DATE_TIME_HH_MM_SS_FORMATTER;
-import static com.factory.deepforestrunner.util.CommonUtil.nvl;
-
 /**
  * RunnerUtil data
  *
@@ -27,6 +24,9 @@ import static com.factory.deepforestrunner.util.CommonUtil.nvl;
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RunnerUtil {
+
+    //    private static final LocalTime START_TIME = LocalTime.of(0, 0, 0);
+
 
     /**
      * Runner 2 dto runner dto.
@@ -47,9 +47,9 @@ public final class RunnerUtil {
             .setParticipant(participant.getFio())
             .setNumber(runner.getNumber())
             .setGender(participant.getGender())
-            .setStart(nvl(runner.getStart(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
-            .setFinish(nvl(runner.getFinish(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
-            .setTotal(nvl(runner.getTotal(), date -> date.format(DATE_TIME_HH_MM_SS_FORMATTER)))
+            .setStart(runner.getStart())
+            .setFinish(runner.getFinish())
+            .setTotal(runner.getTotal())
             .setKp(runner.getKp());
     }
 }

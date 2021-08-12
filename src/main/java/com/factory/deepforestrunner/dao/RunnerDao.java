@@ -13,6 +13,7 @@ package com.factory.deepforestrunner.dao;
 import com.factory.deepforestrunner.entity.model.Participant;
 import com.factory.deepforestrunner.entity.model.Runner;
 
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -55,4 +56,49 @@ public interface RunnerDao {
      * @param participant the participant
      */
     void create(Participant participant);
+
+    /**
+     * Sets number.
+     *
+     * @param id     the id
+     * @param number the number
+     * @param start  the start
+     */
+    void setNumber(
+        Long id,
+        Integer number,
+        LocalTime start
+    );
+
+    /**
+     * Sets finish.
+     *
+     * @param id        the id
+     * @param finish    the finish
+     * @param totalTime the total time
+     */
+    void setFinish(
+        Long id,
+        LocalTime finish,
+        LocalTime totalTime
+    );
+
+    /**
+     * Gets runner byid.
+     *
+     * @param id the id
+     * @return the runner byid
+     */
+    Runner getRunnerByid(Long id);
+
+    /**
+     * Sets kp.
+     *
+     * @param id the id
+     * @param kp the kp
+     */
+    void setKp(
+        Long id,
+        Integer kp
+    );
 }

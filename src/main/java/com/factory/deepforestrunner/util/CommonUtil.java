@@ -17,9 +17,12 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.function.Function;
+
+import static org.apache.logging.log4j.util.Strings.isBlank;
 
 /**
  * CommonUtil data
@@ -59,6 +62,31 @@ public final class CommonUtil {
     ) {
         return Objects.isNull(val) ? null : fun.apply(val);
     }
+
+    /**
+     * Nv blank t.
+     *
+     * @param <T> the type parameter
+     * @param val the val
+     * @param fun the fun
+     * @return the t
+     */
+    public static <T> T nvBlank(
+        final String val,
+        final Function<String, T> fun
+    ) {
+        return isBlank(val) ? null : fun.apply(val);
+    }
+
+    /**
+     * The constant STRING_LOCAL_TIME_FUNCTION.
+     */
+    public static final Function<String, LocalTime> STRING_LOCAL_TIME_FUNCTION =
+        str -> nvBlank(str, s -> {
+            final String[] split = s.split(":");
+            return LocalTime.of(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+        });
+
 
     /**
      * The constant DATE_2_LOCAL_DATE.

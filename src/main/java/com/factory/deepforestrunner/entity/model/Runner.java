@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Runner data
@@ -30,8 +30,8 @@ public class Runner implements Serializable {
     private Long id;
     private Long participantId;
     private Integer number;
-    private LocalDateTime start;
-    private LocalDateTime finish;
-    private LocalDateTime total;
+    private LocalTime start;
+    private LocalTime finish;
+    private LocalTime total;
     private Integer kp;
 }

@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.factory.deepforestrunner.util.CommonUtil.DATE_2_LOCAL_DATE_TIME;
+import static com.factory.deepforestrunner.util.CommonUtil.STRING_LOCAL_TIME_FUNCTION;
 import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
 /**
@@ -33,11 +33,11 @@ public class RunnerRowMapper implements RowMapper<Runner> {
     ) throws SQLException {
         return new Runner()
             .setId(resultSet.getLong("id"))
-            .setParticipantId(nvl(resultSet.getString("participant_id"), Long::new))
+            .setParticipantId(nvl(resultSet.getLong("participant_id"), Long::new))
             .setNumber(nvl(resultSet.getString("number"), Integer::new))
-            .setStart(nvl(resultSet.getDate("start"), DATE_2_LOCAL_DATE_TIME))
-            .setFinish(nvl(resultSet.getDate("finish"), DATE_2_LOCAL_DATE_TIME))
-            .setTotal(nvl(resultSet.getDate("total"), DATE_2_LOCAL_DATE_TIME))
+            .setStart(STRING_LOCAL_TIME_FUNCTION.apply(resultSet.getString("start")))
+            .setFinish(STRING_LOCAL_TIME_FUNCTION.apply(resultSet.getString("finish")))
+            .setTotal(STRING_LOCAL_TIME_FUNCTION.apply(resultSet.getString("total")))
             .setKp(nvl(resultSet.getString("kp"), Integer::new));
     }
 }

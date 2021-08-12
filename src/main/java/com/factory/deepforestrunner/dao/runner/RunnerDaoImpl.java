@@ -22,7 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.List;
+
+import static com.factory.deepforestrunner.util.CommonUtil.DATE_TIME_HH_MM_SS_FORMATTER;
+import static com.factory.deepforestrunner.util.CommonUtil.nvl;
 
 /**
  * RunnerDaoImpl data
@@ -84,6 +88,54 @@ public class RunnerDaoImpl implements RunnerDao {
             "INSERT INTO runner (participant_id) " +
                 "VALUES((SELECT id FROM participant WHERE fio = ? LIMIT 1))",
             participant.getFio()
+        );
+    }
+
+    @Override
+    public void setNumber(
+        final Long id,
+        final Integer number,
+        final LocalTime start
+    ) {
+        jdbcTemplate.update(
+            "UPDATE runner SET number = ?, start = ? WHERE id = ?;",
+            number,
+            start.format(DATE_TIME_HH_MM_SS_FORMATTER),
+            id
+        );
+    }
+
+    @Override
+    public void setFinish(
+        final Long id,
+        final LocalTime finish,
+        final LocalTime totalTime
+    ) {
+        jdbcTemplate.update(
+            "UPDATE runner SET finish = ?, total = ?  WHERE id = ?;",
+            nvl(finish, f -> f.format(DATE_TIME_HH_MM_SS_FORMATTER)),
+            nvl(totalTime, t -> t.format(DATE_TIME_HH_MM_SS_FORMATTER)),
+            id
+        );
+    }
+
+    @Override
+    public Runner getRunnerByid(final Long id) {
+        return jdbcTemplate.query(
+            "SELECT * FROM runner WHERE id = ?;",
+            new RunnerRowMapper(),
+            id).stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public void setKp(
+        final Long id,
+        final Integer kp
+    ) {
+        jdbcTemplate.update(
+            "UPDATE runner SET kp = ? WHERE id = ?;",
+            kp,
+            id
         );
     }
 }
