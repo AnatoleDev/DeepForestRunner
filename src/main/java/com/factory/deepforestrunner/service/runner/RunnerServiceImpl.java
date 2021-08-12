@@ -107,18 +107,21 @@ public class RunnerServiceImpl implements RunnerService {
     ) {
         final Map<Gender, List<RunnerNumber>> genderRunnerMap = getGenderRunnerMap(subdivisions, participants);
 
-        final AtomicInteger number = new AtomicInteger(1);
+        final AtomicInteger number = new AtomicInteger(0);
 
         initRunnerNumber(
             genderRunnerMap.get(Gender.M).stream().collect(Collectors.groupingBy(RunnerNumber::getSubNumber)),
-            number
+            number,
+            number.getAndIncrement()
         );
+
 
         number.set(number.get() + BETWEEN_NUMBER);
 
         initRunnerNumber(
             genderRunnerMap.get(Gender.F).stream().collect(Collectors.groupingBy(RunnerNumber::getSubNumber)),
-            number
+            number,
+            number.get() - 1
         );
 
     }
@@ -147,8 +150,9 @@ public class RunnerServiceImpl implements RunnerService {
     }
 
     private void initRunnerNumber(
-        Map<Integer, List<RunnerNumber>> runnerNumbers,
-        AtomicInteger number
+        final Map<Integer, List<RunnerNumber>> runnerNumbers,
+        final AtomicInteger number,
+        int lastNumber
     ) {
         int maxMaleCount = runnerNumbers.values().stream().map(List::size).max(Integer::compareTo).orElse(0);
         int maxSubMaleCount = runnerNumbers.keySet().stream().max(Integer::compareTo).orElse(0);
@@ -165,7 +169,7 @@ public class RunnerServiceImpl implements RunnerService {
                     .ifPresent(
                         runnerNumber -> {
                             final int andIncrement = number.getAndIncrement();
-                            runnerDao.setNumber(runnerNumber.runnerId, andIncrement, START_TIME.apply(andIncrement));
+                            runnerDao.setNumber(runnerNumber.runnerId, andIncrement, START_TIME.apply(andIncrement - lastNumber));
                         });
             }
         }
