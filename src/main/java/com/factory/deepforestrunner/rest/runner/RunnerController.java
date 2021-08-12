@@ -54,7 +54,6 @@ public class RunnerController {
     public String list(
         final Model model
     ) {
-
         final Map<Long, Subdivision> subdivisionMap = subdivisionService.list().stream()
             .collect(Collectors.toMap(Subdivision::getId, Function.identity()));
 
@@ -93,9 +92,7 @@ public class RunnerController {
         @RequestParam final String finish,
         @PathVariable final Long id
     ) {
-        runnerService.setFinish(
-            id,
-            STRING_LOCAL_TIME_FUNCTION.apply(finish)
+        runnerService.setFinish(id, STRING_LOCAL_TIME_FUNCTION.apply(finish)
         );
         return "redirect:/runner/list";
     }
