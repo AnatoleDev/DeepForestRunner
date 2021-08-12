@@ -47,7 +47,8 @@
             <tr th:each="runner : ${mRunners} ">
 
                 <td><span th:text="${runner.subdivision}"></span></td>
-                <td>#</td>
+                <td><span th:if="${runner.kp}">#</span></td>
+
                 <td><span th:text="${runner.participant}"></span></td>
                 <td>
                     <form action="#" th:action="@{/runner/number/{id}(id=${runner.id})}" method="post">
@@ -105,25 +106,21 @@
             <tr th:each="runner : ${fRunners} ">
 
                 <td><span th:text="${runner.subdivision}"></span></td>
-                <td>#</td>
+                <td><span th:if="${runner.kp}">#</span></td>
                 <td><span th:text="${runner.participant}"></span></td>
                 <td>
                     <form action="#" th:action="@{/runner/number/{id}(id=${runner.id})}" method="post">
                         <input type="number" th:value="${runner.number}" name="number"/>
                     </form>
                 </td>
-
                 <td><input type="time" th:disabled="true" th:value="${runner.start}" step="1"/></td>
-
                 <td>
                     <form action="#" th:action="@{/runner/finish/{id}(id=${runner.id})}" method="post">
                         <input type="time" th:value="${runner.finish}" name="finish" step="1"/>
                         <input th:hidden="true" type="submit"/>
                     </form>
                 </td>
-
                 <td><input type="time" th:disabled="true" th:value="${runner.total}" step="1"/></td>
-
                 <td>
                     <form action="#" th:action="@{/runner/kp/{id}(id=${runner.id})}" method="post">
                         <input type="number" th:value="${runner.kp}" name="kp"/>
