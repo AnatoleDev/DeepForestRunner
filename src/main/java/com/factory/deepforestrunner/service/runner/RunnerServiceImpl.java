@@ -23,12 +23,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
 
 /**
  * RunnerServiceImpl data
@@ -50,7 +50,7 @@ public class RunnerServiceImpl implements RunnerService {
     }
 
     @Override
-    public void createAll(List<Participant> participants) {
+    public void createAll(final List<Participant> participants) {
         runnerDao.createAll(participants);
     }
 
@@ -71,16 +71,16 @@ public class RunnerServiceImpl implements RunnerService {
 
     @Override
     public void setNumber(
-        Long id,
-        Integer number
+        final Long id,
+        final Integer number
     ) {
         runnerDao.setNumber(id, number, START_TIME.apply(number));
     }
 
     @Override
     public void setFinish(
-        Long id,
-        LocalTime finish
+        final Long id,
+        final LocalTime finish
     ) {
         LocalTime totalTime = null;
 
@@ -94,8 +94,8 @@ public class RunnerServiceImpl implements RunnerService {
 
     @Override
     public void setKp(
-        Long id,
-        Integer kp
+        final Long id,
+        final Integer kp
     ) {
         runnerDao.setKp(id, kp);
     }
@@ -115,7 +115,6 @@ public class RunnerServiceImpl implements RunnerService {
             number.getAndIncrement()
         );
 
-
         number.set(number.get() + BETWEEN_NUMBER);
 
         initRunnerNumber(
@@ -123,12 +122,11 @@ public class RunnerServiceImpl implements RunnerService {
             number,
             number.get() - 1
         );
-
     }
 
     private Map<Gender, List<RunnerNumber>> getGenderRunnerMap(
-        List<Subdivision> subdivisions,
-        List<Participant> participants
+        final List<Subdivision> subdivisions,
+        final List<Participant> participants
     ) {
         final Map<Long, Subdivision> subdivisionMap = subdivisions.stream()
             .collect(Collectors.toMap(Subdivision::getId, Function.identity()));
@@ -154,23 +152,17 @@ public class RunnerServiceImpl implements RunnerService {
         final AtomicInteger number,
         int lastNumber
     ) {
-        int maxMaleCount = runnerNumbers.values().stream().map(List::size).max(Integer::compareTo).orElse(0);
-        int maxSubMaleCount = runnerNumbers.keySet().stream().max(Integer::compareTo).orElse(0);
-        for (int i = 0; i < maxMaleCount; i++) {
-
-            for (int j = 1; j <= maxSubMaleCount; j++) {
-
-                int finalI = i;
-                Optional.ofNullable(runnerNumbers.get(j))
-                    .flatMap(
-                        list -> list.stream()
-                            .skip(finalI)
-                            .findFirst())
-                    .ifPresent(
-                        runnerNumber -> {
-                            final int andIncrement = number.getAndIncrement();
-                            runnerDao.setNumber(runnerNumber.runnerId, andIncrement, START_TIME.apply(andIncrement - lastNumber));
-                        });
+        final int maxCount = runnerNumbers.values().stream().map(List::size).max(Integer::compareTo).orElse(0);
+        final int maxSubCount = runnerNumbers.keySet().stream().max(Integer::compareTo).orElse(0);
+        for (int i = 0; i < maxCount; i++) {
+            for (int j = 1; j <= maxSubCount; j++) {
+                final int finalI = i;
+                ofNullable(runnerNumbers.get(j))
+                    .flatMap(list -> list.stream().skip(finalI).findFirst())
+                    .ifPresent(runnerNumber -> {
+                        final int andIncrement = number.getAndIncrement();
+                        runnerDao.setNumber(runnerNumber.runnerId, andIncrement, START_TIME.apply(andIncrement - lastNumber));
+                    });
             }
         }
     }

@@ -10,30 +10,30 @@
 
 package com.factory.deepforestrunner.entity.model;
 
-import com.factory.deepforestrunner.common.Gender;
+import com.factory.deepforestrunner.common.Place;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.time.LocalTime;
 
 /**
- * Runner data
+ * RunnerSummary data
  *
- * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 24.07.2021.
+ * @author <a href="mailto:Anatoly.Glazkov@russianpost.ru">Anatoly Glazkov</a> on 13.08.2021.
  */
-@Setter
 @Getter
+@Setter
 @Accessors(chain = true)
-public class Runner implements Serializable {
+public class CommandSummary {
 
-    private Long id;
-    private Long participantId;
     private Long subdivisionId;
-    private Integer number;
-    private LocalTime start;
-    private LocalTime finish;
+    private Long participantId;
     private LocalTime total;
-    private int kp;
+    private LocalTime best;
+    private LocalTime command;
+    private Place place;
+
+//    private int kp;
+    private int penaltySec;
 }

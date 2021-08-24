@@ -64,6 +64,21 @@ public final class CommonUtil {
     }
 
     /**
+     * Nvl t.
+     *
+     * @param <V>          the type parameter
+     * @param val          the val
+     * @param defaultValue the default value
+     * @return the t
+     */
+    public static <V> V nvl(
+        final V val,
+        final V defaultValue
+    ) {
+        return Objects.isNull(val) ? defaultValue : val;
+    }
+
+    /**
      * Nv blank t.
      *
      * @param <T> the type parameter

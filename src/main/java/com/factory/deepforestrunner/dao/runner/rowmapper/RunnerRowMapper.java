@@ -34,10 +34,11 @@ public class RunnerRowMapper implements RowMapper<Runner> {
         return new Runner()
             .setId(resultSet.getLong("id"))
             .setParticipantId(nvl(resultSet.getLong("participant_id"), Long::new))
+            .setSubdivisionId(nvl(resultSet.getLong("subdivision_id"), Long::new))
             .setNumber(nvl(resultSet.getString("number"), Integer::new))
             .setStart(STRING_LOCAL_TIME_FUNCTION.apply(resultSet.getString("start")))
             .setFinish(STRING_LOCAL_TIME_FUNCTION.apply(resultSet.getString("finish")))
             .setTotal(STRING_LOCAL_TIME_FUNCTION.apply(resultSet.getString("total")))
-            .setKp(nvl(resultSet.getString("kp"), Integer::new));
+            .setKp(resultSet.getInt("kp"));
     }
 }

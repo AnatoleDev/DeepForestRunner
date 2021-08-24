@@ -19,22 +19,31 @@
 
     <div id="container">
         <center>
-            <p><a th:href="@{/subdivision/list}">
-                <button type="button">Жеребьевка</button>
-            </a>
-            <p><a th:href="@{/participant/list}">
-                <button type="button">Список участников</button>
-            </a>
-            <p><a th:href="@{/runner/list}">
             <p>
-                <button type="button">Стартовый протокол</button>
+                <a th:href="@{/subdivision/list}">
+                    <button type="button">Жеребьевка</button>
                 </a>
+            </p>
             <p>
-                <button>Сводная</button>
-            <p><a th:href="@{/file}">
-            <p>
-                <button type="button">Файлы</button>
+                <a th:href="@{/participant/list}">
+                    <button type="button">Список участников</button>
                 </a>
+            </p>
+            <p>
+                <a th:href="@{/runner/list}">
+                    <button type="button">Стартовый протокол</button>
+                </a>
+            </p>
+            <p>
+                <a th:href="@{/summary/list}">
+                    <button type="button">Сводная</button>
+                </a>
+            </p>
+            <p>
+                <a th:href="@{/file}">
+                    <button type="button">Файлы</button>
+                </a>
+            </p>
         </center>
     </div>
 

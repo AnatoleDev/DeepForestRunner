@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Жеребьевка</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div id="wrapper">
+
+    <!-- ХЕДЕР С ЛОГОТИПОМ -->
+    <div id="header">
+        <a href="/" title="Главная">
+            <center><img src="/img/logo.png"></center>
+        </a>
+    </div>
+
+    <div id="container">
+
+        <p> Сводная</p>
+
+        <p>Кол-во:
+            <span th:text="${summaries.size()}"> </span>
+        </p>
+
+        <table th:border="1">
+            <thead>
+            <tr>
+                <th th:text="${msg.subName}"></th>
+                <th th:text="${msg.subNumber}"></th>
+                <th th:text="${msg.partName}"></th>
+                <th th:text="${msg.partGender}"></th>
+                <th th:text="${msg.total}"></th>
+                <th th:text="${msg.best}"></th>
+                <th th:text="${msg.command}"></th>
+                <th th:text="${msg.place}"></th>
+                <th th:text="${msg.eBalls}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${summaries.isEmpty()}">
+                <td colspan="2">Данные отсутсвуют</td>
+            </tr>
+            <tr th:each="summary : ${summaries} ">
+                <td><span th:text="${summary.subName}"></span></td>
+                <td><span th:text="${summary.subNumber}"></span></td>
+                <td><span th:text="${summary.partName}"></span></td>
+                <td><span th:text="${summary.partGender}"></span></td>
+                <td><span th:text="${summary.total}"></span></td>
+                <td><span th:text="${summary.best}"></span></td>
+                <td><span th:text="${summary.command}"></span></td>
+                <td><span th:text="${summary.place}"></span></td>
+                <td><span th:text="${summary.eBalls}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+
+        </center>
+        <a th:href="@{/}">
+            <button type="button">На главную</button>
+        </a>
+        </center>
+
+    </div>
+
+    <div id="footer">
+        <center>Deep forest run. Сервис жеребьевки, определения результатов и победителей. 2021 Все права защищены.</center>
+    </div>
+
+</div>
+
+</body>
+</html>

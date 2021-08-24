@@ -48,7 +48,7 @@ public class RunnerDaoImpl implements RunnerDao {
     @Override
     public List<Runner> list() {
         return jdbcTemplate.query(
-            "SELECT * FROM runner",
+            "SELECT * FROM runner r LEFT JOIN participant p ON p.id = r.participant_id",
             new RunnerRowMapper());
     }
 
